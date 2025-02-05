@@ -1,10 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template
 
-app = Flask(__name__)
+
+app = Flask(__name__, template_folder="layout")
 
 @app.route('/')
 def home():
-    return 123
+    return render_template("login.html")
 
 
 if __name__ == '__main__':
