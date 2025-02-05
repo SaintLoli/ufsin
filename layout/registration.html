@@ -57,17 +57,16 @@
     <div class="auth-form">
         <h2>Регистрация</h2>
         <form action="#" method="post">
+            <input type="text" placeholder="ФИО" required>
             <input type="text" placeholder="Логин" required>
             <input type="password" placeholder="Пароль" required>
-            <select multiple>
-                <option value='apple'>Яблоко</option>
-                <option value='banana'>Банан</option>
-                <option value='orange'>Апельсин</option>
+            <label for="departaments">Выберите Департамент:</label>
+            <select id="departaments" name="departament">
+                <option value="apple">первый</option>
+                <option value="banana">второй</option>
+                <option value="orange">третий</option>
             </select>
-
-            <button type="submit" class="enter">Войти</button>
-
-            <button type="button" class="reg" onclick="window.location.href='register.html'">Регистрация</button>
+            <button type="button" class="reg" onclick="window.location.href='register.html'">Зарегестрироваться</button>
         </form>
     </div>
 </body>
