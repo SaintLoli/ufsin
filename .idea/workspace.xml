@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/PCInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/PCInfo.py" afterDir="false" />
     </list>
@@ -143,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738747294804</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="+ мать">
+      <created>1738749108140</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1738749108140</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -163,17 +171,7 @@
     <MESSAGE value="db_test" />
     <MESSAGE value="шаблон + инфо о процессоре с реестра" />
     <MESSAGE value="+ видеокарта" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ видеокарта" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/classes/PCInfo.py</url>
-          <line>5</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="+ мать" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ мать" />
   </component>
 </project>

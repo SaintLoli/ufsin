@@ -5,12 +5,10 @@ class PCInfo:
     def __init__(self):
         self.processor = ''
         self.motherboard = ''
-        self.ram = ''
         self.video_card = ''
         self.other = []
 
         self.registry = ConnectRegistry(None, HKEY_LOCAL_MACHINE)
-
 
         """
         вызов функций на получение информации из регистра
