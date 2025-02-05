@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="1st commit" />
+    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="1st commit">
+      <change beforePath="$PROJECT_DIR$/layout/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/registration.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +163,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738751695440</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="1st commit">
+      <created>1738752110708</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1738752110708</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
