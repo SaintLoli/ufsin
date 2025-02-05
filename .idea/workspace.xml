@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="" />
+    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/PCInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/PCInfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,7 +41,7 @@
       <recent name="C:\Users\borod\PycharmProjects\ufsin\additional_data" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.main">
+  <component name="RunManager" selected="Python.PCInfo">
     <configuration name="PCInfo" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ufsin" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -158,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738752223061</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="login + reg">
+      <created>1738752703014</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1738752703014</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -179,6 +190,7 @@
     <MESSAGE value="шаблон + инфо о процессоре с реестра" />
     <MESSAGE value="+ видеокарта" />
     <MESSAGE value="+ мать" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ мать" />
+    <MESSAGE value="login + reg" />
+    <option name="LAST_COMMIT_MESSAGE" value="login + reg" />
   </component>
 </project>

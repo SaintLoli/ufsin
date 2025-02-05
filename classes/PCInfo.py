@@ -25,7 +25,7 @@ class PCInfo:
         path_to_video_card = QueryValueEx(OpenKey(self.registry, r"HARDWARE\DEVICEMAP\VIDEO"), "\Device\Video0")[0]
         path_to_video_card = path_to_video_card.replace("\Registry\Machine\System", "")
         path_to_video_card = r"SYSTEM" + path_to_video_card
-        self.video_card = QueryValueEx(OpenKey(self.registry, path_to_video_card), "HardwareInformation.AdapterString")[0]
+        self.video_card = QueryValueEx(OpenKey(self.registry, path_to_video_card), "DriverDesc")[0]
 
     def get_motherboard_info(self):
         key = OpenKey(self.registry, r"HARDWARE\DESCRIPTION\System\BIOS")
