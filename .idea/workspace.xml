@@ -136,7 +136,14 @@
       <option name="project" value="LOCAL" />
       <updated>1738745421978</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="+ видеокарта">
+      <created>1738747294804</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1738747294804</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,7 +162,8 @@
     <MESSAGE value="1st commit" />
     <MESSAGE value="db_test" />
     <MESSAGE value="шаблон + инфо о процессоре с реестра" />
-    <option name="LAST_COMMIT_MESSAGE" value="шаблон + инфо о процессоре с реестра" />
+    <MESSAGE value="+ видеокарта" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ видеокарта" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
