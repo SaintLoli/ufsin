@@ -57,16 +57,16 @@
     <div class="auth-form">
         <h2>Регистрация</h2>
         <form action="#" method="post">
-            <input type="text"   id="FIO" placeholder="ФИО" required>
-            <input type="text"  id="login" placeholder="Логин" required>
-            <input type="password"  id="pass" placeholder="Пароль" required>
+            <input type="text" name="FIO" placeholder="ФИО" required>
+            <input type="text" name="login" placeholder="Логин" required>
+            <input type="password" id="pass" name="pass" placeholder="Пароль" required>
             <label for="departaments">Выберите Департамент:</label>
             <select id="departaments" name="departament" >
                 <option value="first">первый</option>
                 <option value="second">второй</option>
                 <option value="third">третий</option>
             </select>
-            <button type="button" class="reg" onclick="window.location.href='login'">Зарегистрироваться</button>
+            <input type="submit" value="Зарегистрироваться"> ''' так надо
         </form>
     </div>
 </body>
