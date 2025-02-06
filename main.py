@@ -4,11 +4,11 @@ from classes.DB_helper import  DBHelper
 app = Flask(__name__, template_folder="layout")
 database = DBHelper()
 
-@app.route('/')
-@app.route('/login')
+@app.route('/', methods=["GET", "POST"])
 def login():
-    if database.check_user(request.form["login"], password=request.form["pass"]):
-        return render_template("home.html")
+    if request.method == "POST":
+        if database.check_user(request.form['login'], request.form["pass"]):
+            return render_template("admin_home.html")
 
     return render_template("login.html")
 
