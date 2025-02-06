@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор таблицы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .button-container {
+            margin-bottom: 20px;
+        }
+        .button {
+            padding: 10px 15px;
+            margin-right: 10px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <button class="button" onclick="showTable('warehouses')">Склады</button>
+        <button class="button" onclick="showTable('users')">Пользователи</button>
+        <button class="button" onclick="showTable('institutions')">Учреждения</button>
+        <button class="button" onclick="showTable('computers')">Компьютеры</button>
+        <button class="button" onclick="showTable('monitors')">Мониторы</button>
+        <button class="button" onclick="showTable('telephones')">Телефоны</button>
+        <button class="button" onclick="showTable('printers')">Принтеры</button>
+        <button class="button" onclick="showTable('other')">Другое</button>
+    </div>
+
+    <div id="table-container">
+
+
+
+    </div>
+
+    <script>
+        function showTable(tableName) {
+            let tableHTML = '';
+
+            switch (tableName) {
+                case 'warehouses':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Название склада</th><th>Адрес</th></tr>
+                            <tr><td>1</td><td>Склад 1</td><td>Улица 1</td></tr>
+                            <tr><td>2</td><td>Склад 2</td><td>Улица 2</td></tr>
+                        </table>`;
+                    break;
+                case 'users':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Имя пользователя</th><th>Email</th></tr>
+                            <tr><td>1</td><td>Иван Иванов</td><td>ivan@example.com</td></tr>
+                            <tr><td>2</td><td>Мария Петрова</td><td>maria@example.com</td></tr>
+                        </table>`;
+                    break;
+                case 'institutions':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Название учреждения</th><th>Тип</th></tr>
+                            <tr><td>1</td><td>Учебное заведение 1</td><td>Школа</td></tr>
+                            <tr><td>2</td><td>Учебное заведение 2</td><td>Университет</td></tr>
+                        </table>`;
+                    break;
+                case 'computers':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Модель компьютера</th><th>Состояние</th></tr>
+                            <tr><td>1</td><td>Dell XPS 13</td><td>Рабочий</td></tr>
+                            <tr><td>2</td><td>HP Pavilion</td><td>Неисправен</td></tr>
+                        </table>`;
+                    break;
+                case 'monitors':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Модель монитора</th><th>Состояние</th></tr>
+                            <tr>
+                            <td>1</td><td>Samsung S24F350FHI</td><td>Рабочий</td></tr>
+                            <tr><td>2</td><td>Acer R240HY</td><td>Неисправен</td></tr>
+                        </table>`;
+                    break;
+                case 'telephones':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Модель телефона</th><th>Состояние</th></tr>
+                            <tr><td>1</td><td>iPhone 12</td><td>Рабочий</td></tr>
+                            <tr><td>2</td><td>Samsung Galaxy S21</td><td>Неисправен</td></tr>
+                        </table>`;
+                    break;
+                case 'printers':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Модель принтера</th><th>Состояние</th></tr>
+                            <tr><td>1</td><td>Epson EcoTank ET-2720</td><td>Рабочий</td></tr>
+                            <tr><td>2</td><td>Cannon PIXMA G6020</td><td>Неисправен</td></tr>
+                        </table>`;
+                    break;
+                case 'other':
+                    tableHTML = `
+                        <table>
+                            <tr><th>ID</th><th>Описание предмета</th></tr>
+                            <tr><td>1</td><td>Проектор Epson EB-X41</td></tr>
+                            <tr><td>2</td><td>Сканер Canon CanoScan LiDE 300</td></tr>
+                        </table>`;
+                    break;
+                default:
+                    tableHTML = '<p>Выберите таблицу.</p>';
+            }
+
+            document.getElementById('table-container').innerHTML = tableHTML;
+        }
+    </script>
+
+</body>
+</html>
