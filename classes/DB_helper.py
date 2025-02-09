@@ -14,3 +14,6 @@ class DBHelper:
             return True
         else:
             return False
+
+    def add_computer_info(self, PC):
+        ...

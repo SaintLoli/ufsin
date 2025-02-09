@@ -6,6 +6,8 @@ class PCInfo:
         self.processor = ''
         self.motherboard = ''
         self.video_card = ''
+        self.ram = ''
+        self.year = ''
         self.other = []
 
         self.registry = ConnectRegistry(None, HKEY_LOCAL_MACHINE)
@@ -31,15 +33,6 @@ class PCInfo:
         key = OpenKey(self.registry, r"HARDWARE\DESCRIPTION\System\BIOS")
         self.motherboard = QueryValueEx(key, "BaseBoardManufacturer")[0] + " " + \
                            QueryValueEx(key, "BaseBoardProduct")[0]
-
-    def get_pc_processor(self):
-        return self.processor
-
-    def get_pc_video_card(self):
-        return self.video_card
-
-    def get_pc_motherboard(self):
-        return self.processor
 
     def __repr__(self):
         return f"Процессор: {self.processor}\n" \
