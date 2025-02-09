@@ -10,10 +10,13 @@ class DBHelper:
         self.con.commit()
 
     def check_user(self, login, password):
-        if self.cur.execute(f"SELECT * FROM user WHERE login='{login}'and password='{password}'").fetchone():
+        if self.cur.execute(f"SELECT * FROM user WHERE login='{login}' and password='{password}'").fetchone():
             return True
         else:
             return False
 
-    def add_computer_info(self, PC):
+    def get_user_id(self, login):
+        return self.cur.execute(f"SELECT id FROM user WHERE login='{login}'").fetchone()[0]
+
+    def add_computer_info(self, user_id, PC):
         ...
