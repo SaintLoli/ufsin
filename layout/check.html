@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка характеристик ПК</title>
+    <!-- Подключение Bootstrap для стилизации -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .results {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="mb-4">Проверка характеристик компьютера</h2>
+
+        <div class="card p-4" id="checkForm">
+            <form id="pcCheckForm" onsubmit="return validateForm(event)">
+
+
+                <div class="mb-3">
+                    <label for="cpu" class="form-label">Процессор (CPU)</label>
+                    <input type="text" class="form-control" id="cpu" required
+                           placeholder="Например, Intel Core i7-9700K">
+                </div>
+
+                <div class="mb-3">
+                    <label for="motherboard" class="form-label">Материнская плата</label>
+                    <input type="text" class="form-control" id="motherboard" required
+                           placeholder="Например, ASUS ROG STRIX Z390-E">
+                </div>
+
+                <div class="mb-3">
+                    <label for="gpu" class="form-label">Видеокарта (GPU)</label>
+                    <input type="text" class="form-control" id="gpu" required
+                           placeholder="Например, NVIDIA GTX 1080">
+                </div>
+
+
+                <div class="mb-3">
+                    <label for="ram" class="form-label">Оперативная память (ГБ)</label>
+                    <input type="number" class="form-control" id="ram" required
+                           min="1" max="256" placeholder="Объем ОЗУ в гигабайтах">
+                </div>
+
+                <div class="mb-3">
+                    <label for="year" class="form-label">Год выпуска</label>
+                    <input type="number" class="form-control" id="year" required
+                           min="2000" max="2024" placeholder="Год выпуска ПК">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Проверить</button>
+            </form>
+        </div>
+
+        <div class="card p-4 results" id="results">
+            <h4>Результаты проверки:</h4>
+            <div id="checkResults"></div>
+            <button class="btn btn-secondary mt-3" onclick="resetForm()">Проверить снова</button>
+        </div>
+    </div>
+
+    <script>
+        ///function validateForm(event) {
+            event.preventDefault();
+
+            // Получаем значения из формы
+            const gpu = document.getElementById('gpu').value;
+            const cpu = document.getElementById('cpu').value;
+            const motherboard = document.getElementById('motherboard').value;
+            const year = document.getElementById('year').value;
+            const ram = document.getElementById('ram').value;
+
+            // Формируем результаты
+            const resultsHTML = `
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>GPU:</strong> ${gpu}</li>
+                    <li class="list-group-item"><strong>CPU:</strong> ${cpu}</li>
+                    <li class="list-group-item"><strong>Материнская плата:</strong> ${motherboard}</li>
+                    <li class="list-group-item"><strong>Год выпуска:</strong> ${year}</li>
+                    <li class="list-group-item"><strong>ОЗУ:</strong> ${ram} ГБ</li>
+                </ul>
+            `;
+
+            // Показываем результаты
+            document.getElementById('checkResults').innerHTML = resultsHTML;
+            document.getElementById('checkForm').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+
+            return false;
+        }
+
+        function resetForm() {
+            document.getElementById('checkForm').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('pcCheckForm').reset();
+        }///
+    </script>
+</body>
+</html>
