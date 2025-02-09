@@ -19,19 +19,22 @@ def login():
         # PC = PCInfo()
         if database.check_user(request.form['login'], request.form["pass"]):
             USER_ID = database.get_user_id(request.form['login'])
-            # return redirect(url_for('admin_panel'))
-            return redirect(url_for('check_data'))
+            return redirect(url_for('admin_panel'))
 
     return render_template("login.html")
 
 
 @app.route("/registration", methods=["GET", "POST"])
 def register():
+    global USER_ID
     if request.method == "POST":
         database.add_user(login=request.form["login"],
                           password=request.form["pass"],
-                          fio=request.form["FIO"])
+                          fio=request.form["FIO"],
+                          number=request.form["number"],
+                          tubel_number=request.form["tubel_number"])
 
+        USER_ID = database.get_user_id(request.form['login'])
         return redirect(url_for("check_data"))
 
     return render_template("registration.html")
@@ -45,9 +48,15 @@ def admin_panel():
 @app.route("/check_data", methods=["GET", "POST"])
 def check_data():
     PC = PCInfo()
-
     if request.method == "POST":
-        ...
+        database.add_computer_info(user_id=USER_ID,
+                                   cpu=request.form["cpu"],
+                                   motherboard=request.form["motherboard"],
+                                   gpu=request.form["gpu"],
+                                   ram=request.form["ram"],
+                                   year=request.form["year"],
+                                   s_number=request.form["s_number"])
+
 
     return render_template("check.html", cpu=PC.processor,
                                          motherboard=PC.motherboard,

@@ -22,7 +22,7 @@
         <h2 class="mb-4">Проверка характеристик компьютера</h2>
 
         <div class="card p-4" id="checkForm">
-            <form id="pcCheckForm" onsubmit="return validateForm(event)">
+            <form id="pcCheckForm" onsubmit="return validateForm(event)" method="post">
 
 
                 <div class="mb-3">
@@ -33,32 +33,32 @@
 
                 <div class="mb-3">
                     <label for="motherboard" class="form-label">Материнская плата</label>
-                    <input type="text" class="form-control" id="motherboard" required
+                    <input type="text" class="form-control" id="motherboard" name="motherboard" required
                            placeholder="Например, ASUS ROG STRIX Z390-E" value="{{motherboard}}">
                 </div>
 
                 <div class="mb-3">
                     <label for="gpu" class="form-label">Видеокарта (GPU)</label>
-                    <input type="text" class="form-control" id="gpu" required
+                    <input type="text" class="form-control" id="gpu" name="gpu" required
                            placeholder="Например, NVIDIA GTX 1080" value="{{gpu}}">
                 </div>
 
 
                 <div class="mb-3">
                     <label for="ram" class="form-label">Оперативная память (ГБ)</label>
-                    <input type="number" class="form-control" id="ram" required
+                    <input type="number" class="form-control" id="ram" name="ram" required
                            min="1" max="256" placeholder="Объем ОЗУ в гигабайтах">
                 </div>
 
                 <div class="mb-3">
                     <label for="year" class="form-label">Год выпуска</label>
-                    <input type="number" class="form-control" id="year" required
+                    <input type="number" class="form-control" id="year" name="year" required
                            min="2000" max="2024" placeholder="Год выпуска ПК">
                 </div>
 
                 <div class="mb-3">
                     <label for="s_number" class="form-label">Серийный номер</label>
-                    <input type="text" class="form-control" id="s_number" required
+                    <input type="text" class="form-control" id="s_number" name="s_number" required
                            placeholder="Например, SN-45678901">
                 </div>
 

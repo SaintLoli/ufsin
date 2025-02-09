@@ -5,8 +5,9 @@ class DBHelper:
         self.con = sqlite3.connect('DB/UFSIN_DB.db', check_same_thread=False)
         self.cur = self.con.cursor()
 
-    def add_user(self, fio, login, password):
-        self.cur.execute(f"INSERT INTO user (login, password, fio) VALUES ('{login}', '{password}', '{fio}')")
+    def add_user(self, fio, login, password, number, tubel_number):
+        self.cur.execute(f"INSERT INTO user (login, password, fio, number, tubel_number) VALUES "
+                         f"('{login}', '{password}', '{fio}', '{number}', '{tubel_number}')")
         self.con.commit()
 
     def check_user(self, login, password):
@@ -18,5 +19,8 @@ class DBHelper:
     def get_user_id(self, login):
         return self.cur.execute(f"SELECT id FROM user WHERE login='{login}'").fetchone()[0]
 
-    def add_computer_info(self, user_id, PC):
-        ...
+    def add_computer_info(self, user_id, cpu, motherboard, gpu, ram, year, s_number):
+        self.cur.execute(f"INSERT INTO comp (id_user, motherboard, gpu, cpu, ram, year, serial_number)"
+                         f" VALUES ('{user_id}', '{cpu}', '{motherboard}', '{gpu}', "
+                         f"'{ram}', {year}, '{s_number}')")
+        self.con.commit()
