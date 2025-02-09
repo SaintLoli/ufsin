@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from classes.DB_helper import  DBHelper
 
 app = Flask(__name__, template_folder="layout")
@@ -8,7 +8,7 @@ database = DBHelper()
 def login():
     if request.method == "POST":
         if database.check_user(request.form['login'], request.form["pass"]):
-            return render_template("admin_home.html")
+            return redirect(url_for('admin_panel'))
 
     return render_template("login.html")
 
@@ -21,6 +21,12 @@ def register():
                           fio=request.form["FIO"])
 
     return render_template("registration.html")
+
+
+@app.route("/admin_home")
+def admin_panel():
+    return render_template("admin_home.html")
+
 
 
 if __name__ == '__main__':
