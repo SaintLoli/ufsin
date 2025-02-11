@@ -13,6 +13,8 @@ USER_ID = ''
 DEVICES = []
 
 
+
+
 @app.route('/', methods=["GET", "POST"])
 def login():
     global USER_ID
@@ -46,6 +48,7 @@ def register():
 def admin_panel():
     PC = database.get_computer_info(int(USER_ID))
     print(PC)
+
     return render_template("admin_home.html",
                            motherboard=PC[1],
                            cpu=PC[0],
@@ -55,6 +58,27 @@ def admin_panel():
                            year=PC[4],
                            monitor=database.get_item("monitor", int(USER_ID)),
                            tel=database.get_item("tel", int(USER_ID)))
+
+
+@app.route("/admin_home/staff")
+def staff():
+
+    return render_template("staff.html")
+
+@app.route("/admin_home/sklad")
+def sklad():
+
+    return render_template("sklad.html")
+@app.route("/admin_home/otchet")
+def otchet():
+
+    return render_template("otchet.html")
+@app.route("/admin_home/departments")
+def departments():
+
+    return render_template("departments.html")
+
+
 
 
 @app.route("/check_data", methods=["GET", "POST"])
@@ -77,6 +101,10 @@ def check_data():
 
 def fill_devices(user_id):
     ...
+
+
+
+
 
 
 if __name__ == '__main__':
