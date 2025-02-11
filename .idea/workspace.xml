@@ -273,7 +273,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739262887049</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="admin get pc">
+      <created>1739263928896</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1739263928896</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -299,6 +306,7 @@
     <MESSAGE value="test" />
     <MESSAGE value="admin_redirect" />
     <MESSAGE value="cpu mother gpu add_in_form" />
-    <option name="LAST_COMMIT_MESSAGE" value="cpu mother gpu add_in_form" />
+    <MESSAGE value="admin get pc" />
+    <option name="LAST_COMMIT_MESSAGE" value="admin get pc" />
   </component>
 </project>

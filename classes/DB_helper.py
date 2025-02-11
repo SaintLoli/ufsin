@@ -29,3 +29,6 @@ class DBHelper:
         return self.cur.execute(
             f"SELECT motherboard, gpu, cpu, ram, year, serial_number FROM comp WHERE id_user=?", str(user_id)
         ).fetchone()
+
+    def get_item(self, item, user_id):
+        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", str(user_id)).fetchone()[0]

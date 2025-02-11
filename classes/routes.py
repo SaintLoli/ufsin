@@ -50,7 +50,9 @@ def admin_panel():
                            gpu=PC[2],
                            ram=PC[3],
                            s_number=PC[5],
-                           year=PC[4])
+                           year=PC[4],
+                           monitor=database.get_item("monitor", int(USER_ID)),
+                           tel=database.get_item("tel", int(USER_ID)))
 
 
 @app.route("/check_data", methods=["GET", "POST"])
