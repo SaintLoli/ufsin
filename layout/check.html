@@ -77,14 +77,14 @@
         ///function validateForm(event) {
             event.preventDefault();
 
-            // Получаем значения из формы
+
             const gpu = document.getElementById('gpu').value;
             const cpu = document.getElementById('cpu').value;
             const motherboard = document.getElementById('motherboard').value;
             const year = document.getElementById('year').value;
             const ram = document.getElementById('ram').value;
 
-            // Формируем результаты
+
             const resultsHTML = `
                 <ul class="list-group">
                     <li class="list-group-item"><strong>GPU:</strong> ${gpu}</li>
@@ -95,7 +95,7 @@
                 </ul>
             `;
 
-            // Показываем результаты
+
             document.getElementById('checkResults').innerHTML = resultsHTML;
             document.getElementById('checkForm').style.display = 'none';
             document.getElementById('results').style.display = 'block';
