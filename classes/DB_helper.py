@@ -24,3 +24,8 @@ class DBHelper:
                          f" VALUES ('{user_id}', '{cpu}', '{motherboard}', '{gpu}', "
                          f"'{ram}', {year}, '{s_number}')")
         self.con.commit()
+
+    def get_computer_info(self, user_id):
+        return self.cur.execute(
+            f"SELECT (motherboard, gpu, cpu, ram, year, serial_number) FROM comp WHERE id_user=?", user_id
+        ).fetchone()

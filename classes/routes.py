@@ -42,6 +42,8 @@ def register():
 
 @app.route("/admin_home")
 def admin_panel():
+    PC = database.get_computer_info(USER_ID)
+    print(PC)
     return render_template("admin_home.html")
 
 
