@@ -42,9 +42,15 @@ def register():
 
 @app.route("/admin_home")
 def admin_panel():
-    PC = database.get_computer_info(USER_ID)
+    PC = database.get_computer_info(int(USER_ID))
     print(PC)
-    return render_template("admin_home.html")
+    return render_template("admin_home.html",
+                           motherboard=PC[1],
+                           cpu=PC[0],
+                           gpu=PC[2],
+                           ram=PC[3],
+                           s_number=PC[5],
+                           year=PC[4])
 
 
 @app.route("/check_data", methods=["GET", "POST"])
