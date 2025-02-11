@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from classes.DB_helper import  DBHelper
 from classes.PCInfo import PCInfo
+from classes.Device import Device
 
 app = Flask(__name__, template_folder="../layout")
 database = DBHelper()
@@ -9,6 +10,7 @@ database = DBHelper()
 Информация о пользователе
 """
 USER_ID = ''
+DEVICES = []
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -71,6 +73,10 @@ def check_data():
     return render_template("check.html", cpu=PC.processor,
                                          motherboard=PC.motherboard,
                                          gpu=PC.video_card)
+
+
+def fill_devices(user_id):
+    ...
 
 
 if __name__ == '__main__':

@@ -1,0 +1,4 @@
+TABLENAMES = {
+    'board' : 'Клавиатура',
+    'monitor' : ""
+}
