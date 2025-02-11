@@ -49,19 +49,19 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin_home">Главная</a>
+                        <a class="nav-link active" href="#">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin_home/staff">Сотрудники</a>
+                        <a class="nav-link" href="/check_data">Сотрудники</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin_home/departments">Подразделения</a>
+                        <a class="nav-link" href="#">Подразделения</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin_home/sklad">Склад</a>
+                        <a class="nav-link" href="#">Склад</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin_home/otchet">Отчеты</a>
+                        <a class="nav-link" href="#">Отчеты</a>
                     </li>
                 </ul>
             </div>
@@ -82,46 +82,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                {{motherboard}},<br>
-                                {{cpu}},<br>
-                                {{gpu}}, <br>
-                                {{ram}} ГБ <br>
-                                <small class="text-muted">Серийный номер: {{s_number}}</small>
-                            </a>
-                        </td>
-                        <td>Системный блок</td>
-                        <td>INV-2022-001</td>
-                        <td>{{year}}</td>
-                        <td><span class="badge bg-success">В эксплуатации</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                {{monitor}}<br>
-                            </a>
-                        </td>
-                        <td>Монитор</td>
-                        <td></td>
-                        <td>INV-2021-045</td>
-                        <td><span class="badge bg-warning text-dark">На ремонте</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                {{tel}}<br>
-                            </a>
-                        </td>
-                        <td>Телефон стационарный</td>
-                        <td></td>
-                        <td>INV-2020-123</td>
-                        <td><span class="badge bg-danger">Списано</span></td>
-                    </tr>
+                    {% for device in devices %}
+                        <tr>
+                            <td>{{device.id}}</td>
+                            <td>
+                                <a href="#" class="text-decoration-none">
+                                    {{device.name|safe}} <br>
+                                    <small class="text-muted">Серийный номер: {{device.s_number}}</small>
+                                </a>
+                            </td>
+                            <td>{{device.type}}</td>
+                            <td>INV-2022-001</td>
+                            <td>{{device.year}}</td>
+                            <td><span class="badge bg-success">{{device.status}}</span></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
