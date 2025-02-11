@@ -32,3 +32,8 @@ class DBHelper:
 
     def get_item(self, item, user_id):
         return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", str(user_id)).fetchone()[0]
+
+    def get_users(self):
+        return self.cur.execute(
+            f"SELECT fio, role, office, number, tubel_number FROM user"
+        ).fetchall()

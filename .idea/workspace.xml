@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="admin get pc">
+    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Device.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Device.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/TABLENAMES.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TABLENAMES.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Device.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layout/admin_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/admin_home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/staff.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +47,7 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration name="Device" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Models" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ufsin" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -60,7 +59,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="C:\Users\borod\PycharmProjects\ufsin\classes\Device.py" />
+      <option name="SCRIPT_NAME" value="C:\Users\borod\PycharmProjects\ufsin\classes\Models.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -136,7 +135,7 @@
       <list>
         <item itemvalue="Python.main" />
         <item itemvalue="Python.PCInfo" />
-        <item itemvalue="Python.Device" />
+        <item itemvalue="Python.Models" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +295,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739265516910</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="zayebis` vse zdelal">
+      <created>1739267806433</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1739267806433</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -323,6 +329,7 @@
     <MESSAGE value="admin_redirect" />
     <MESSAGE value="cpu mother gpu add_in_form" />
     <MESSAGE value="admin get pc" />
-    <option name="LAST_COMMIT_MESSAGE" value="admin get pc" />
+    <MESSAGE value="zayebis` vse zdelal" />
+    <option name="LAST_COMMIT_MESSAGE" value="zayebis` vse zdelal" />
   </component>
 </project>

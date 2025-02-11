@@ -82,45 +82,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {% for user in users %}
                     <tr>
-                        <td>1</td>
+                        <td>{{user.id}}</td>
                         <td>
                             <a href="#" class="text-decoration-none">
-                                Иванов Иван Иванович<br>
-                                <small class="text-muted">Табельный номер: 12345</small>
+                                {{user.name}} <br>
+                                <small class="text-muted">Табельный номер: {{user.tubel}}</small>
                             </a>
                         </td>
-                        <td>Инженер по технике</td>
-                        <td>Отдел информатизации</td>
-                        <td>+7 (912) 345-67-89</td>
-                        <td><span class="badge bg-success">Активен</span></td>
+                        <td>{{user.job_title}}</td>
+                        <td>{{user.office}}</td>
+                        <td>{{user.tel}}</td>
+                        <td><span class="badge bg-success">{{user.status}}</span></td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                Петров Петр Петрович<br>
-                                <small class="text-muted">Табельный номер: 23456</small>
-                            </a>
-                        </td>
-                        <td>Системный администратор</td>
-                        <td>Отдел информатизации</td>
-                        <td>+7 (912) 456-78-90</td>
-                        <td><span class="badge bg-warning text-dark">В отпуске</span></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                Сидорова Анна Владимировна<br>
-                                <small class="text-muted">Табельный номер: 34567</small>
-                            </a>
-                        </td>
-                        <td>Начальник отдела</td>
-                        <td>Отдел кадров</td>
-                        <td>+7 (912) 567-89-01</td>
-                        <td><span class="badge bg-dark">Не активен</span></td>
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

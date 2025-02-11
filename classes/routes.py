@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 from classes.DB_helper import  DBHelper
 from classes.PCInfo import PCInfo
-from classes.Device import Device
+from classes.Models import *
 from classes.TABLENAMES import TABLENAMES
 
 app = Flask(__name__, template_folder="../layout")
@@ -12,6 +12,7 @@ database = DBHelper()
 """
 USER_ID = ''
 DEVICES = []
+USERS = []
 
 
 
@@ -50,22 +51,14 @@ def admin_panel():
     PC = database.get_computer_info(int(USER_ID))
     fill_devices()
 
-    # return render_template("admin_home.html",
-    #                        motherboard=PC[1],
-    #                        cpu=PC[0],
-    #                        gpu=PC[2],
-    #                        ram=PC[3],
-    #                        s_number=PC[5],
-    #                        year=PC[4],
-    #                        monitor=database.get_item("monitor", int(USER_ID)),
-    #                        tel=database.get_item("tel", int(USER_ID)))
     return render_template("admin_home.html",
                            devices=DEVICES)
 
 
 @app.route("/admin_home/staff")
 def staff():
-    return render_template("staff.html")
+    fill_users()
+    return render_template("staff.html", users=USERS)
 
 
 @app.route("/admin_home/sklad")
@@ -118,6 +111,21 @@ def fill_devices():
         DEVICES[-1].id = id
         id += 1
 
+
+def fill_users():
+    global USERS
+    USERS.clear()
+    id = 1
+
+    for user in database.get_users():
+        USERS.append(User(user[0],
+                          user[1] if not None else '',
+                          user[2] if not None else '',
+                          user[3] if not None else '',
+                          user[4] if not None else '',
+                          "Активен"))
+        USERS[-1].id = id
+        id += 1
 
 
 
