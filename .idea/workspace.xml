@@ -5,11 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/classes/Filler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Device.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layout/staff.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/staff.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout/departments.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/departments.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout/registration.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/registration.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout/sklad.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/sklad.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -302,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739267806433</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="+ staff">
+      <created>1739269686226</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1739269686226</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -330,6 +341,7 @@
     <MESSAGE value="cpu mother gpu add_in_form" />
     <MESSAGE value="admin get pc" />
     <MESSAGE value="zayebis` vse zdelal" />
-    <option name="LAST_COMMIT_MESSAGE" value="zayebis` vse zdelal" />
+    <MESSAGE value="+ staff" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ staff" />
   </component>
 </project>

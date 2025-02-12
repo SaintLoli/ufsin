@@ -76,51 +76,23 @@
                         <th>#</th>
                         <th>Название склада</th>
                         <th>Адрес</th>
-                        <th>Тип склада</th>
                         <th>Ответственный</th>
 
                     </tr>
                 </thead>
                 <tbody>
+                    {% for whs in warehouses %}
                     <tr>
-                        <td>1</td>
+                        <td>{{whs.id}}</td>
                         <td>
                             <a href="#" class="text-decoration-none">
-                                Склад №1<br>
-
+                                {{whs.name}}<br>
                             </a>
                         </td>
-                        <td>г. Сыктывкар, ул. Ленина, 10</td>
-                        <td>Основной</td>
-                        <td>Иванов Иван Иванович</td>
-
+                        <td>{{whs.address}}</td>
+                        <td>{{whs.supervisor}}</td>
                     </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                Склад №2<br>
-
-                            </a>
-                        </td>
-                        <td>г. Сыктывкар, ул. Советская, 25</td>
-                        <td>Вспомогательный</td>
-                        <td>Петров Петр Петрович</td>
-
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>
-                            <a href="#" class="text-decoration-none">
-                                Склад №3<br>
-
-                            </a>
-                        </td>
-                        <td>г. Ухта, ул. Промышленная, 5</td>
-                        <td>Архивный</td>
-                        <td>Сидорова Анна Владимировна</td>
-
-                    </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

@@ -63,10 +63,10 @@
             <input type="text" id="number" name="number" placeholder="Номер телефона" required>
             <input type="text" id="tubel_number" name="tubel_number" placeholder="Табельный номер" required>
             <label for="departaments">Выберите Департамент:</label>
-            <select id="departaments" name="departament" >
-                <option value="first">первый</option>
-                <option value="second">второй</option>
-                <option value="third">третий</option>
+            <select id="departaments" name="department" >
+                {% for dep in departments %}
+                    <option>{{dep.name}}</option>
+                {% endfor %}
             </select>
             <input type="submit" value="Зарегистрироваться">
 

@@ -1,20 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for
-from classes.DB_helper import  DBHelper
 from classes.PCInfo import PCInfo
-from classes.Models import *
-from classes.TABLENAMES import TABLENAMES
+from classes.Filler import *
 
 app = Flask(__name__, template_folder="../layout")
 database = DBHelper()
 
-"""
-Информация о пользователе
-"""
+
+'''Информация о пользователе'''
 USER_ID = ''
-DEVICES = []
-USERS = []
-
-
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -22,7 +15,6 @@ def login():
     global USER_ID
 
     if request.method == "POST":
-        # PC = PCInfo()
         if database.check_user(request.form['login'], request.form["pass"]):
             USER_ID = database.get_user_id(request.form['login'])
             return redirect(url_for('admin_panel'))
@@ -33,23 +25,27 @@ def login():
 @app.route("/registration", methods=["GET", "POST"])
 def register():
     global USER_ID
+
+    fill_departments()
+
     if request.method == "POST":
         database.add_user(login=request.form["login"],
                           password=request.form["pass"],
                           fio=request.form["FIO"],
                           number=request.form["number"],
-                          tubel_number=request.form["tubel_number"])
+                          tubel_number=request.form["tubel_number"],
+                          dep=request.form["department"])
 
         USER_ID = database.get_user_id(request.form['login'])
         return redirect(url_for("check_data"))
 
-    return render_template("registration.html")
+    return render_template("registration.html", departments=DEPARTMENTS)
 
 
 @app.route("/admin_home")
 def admin_panel():
     PC = database.get_computer_info(int(USER_ID))
-    fill_devices()
+    fill_devices(USER_ID)
 
     return render_template("admin_home.html",
                            devices=DEVICES)
@@ -63,7 +59,8 @@ def staff():
 
 @app.route("/admin_home/sklad")
 def sklad():
-    return render_template("sklad.html")
+    fill_warehouses()
+    return render_template("sklad.html", warehouses=WAREHOUSES)
 
 
 @app.route("/admin_home/otchet")
@@ -73,9 +70,9 @@ def otchet():
 
 @app.route("/admin_home/departments")
 def departments():
-    return render_template("departments.html")
-
-
+    fill_departments()
+    return render_template("departments.html",
+                           departments=DEPARTMENTS)
 
 
 @app.route("/check_data", methods=["GET", "POST"])
@@ -94,40 +91,6 @@ def check_data():
     return render_template("check.html", cpu=PC.processor,
                                          motherboard=PC.motherboard,
                                          gpu=PC.video_card)
-
-
-def fill_devices():
-    global DEVICES
-    DEVICES.clear()
-    id = 1
-
-    PC = database.get_computer_info(int(USER_ID))
-    DEVICES.append(Device(", <br>".join(PC[:4]), "Системный блок", "В эксплуатации", PC[4], PC[5]))
-    DEVICES[-1].id = id
-    id += 1
-
-    for table_name in TABLENAMES.keys():
-        DEVICES.append(Device(database.get_item(table_name, int(USER_ID)), TABLENAMES[table_name], "В эксплуатации"))
-        DEVICES[-1].id = id
-        id += 1
-
-
-def fill_users():
-    global USERS
-    USERS.clear()
-    id = 1
-
-    for user in database.get_users():
-        USERS.append(User(user[0],
-                          user[1] if not None else '',
-                          user[2] if not None else '',
-                          user[3] if not None else '',
-                          user[4] if not None else '',
-                          "Активен"))
-        USERS[-1].id = id
-        id += 1
-
-
 
 
 
