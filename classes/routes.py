@@ -25,7 +25,6 @@ def login():
 @app.route("/registration", methods=["GET", "POST"])
 def register():
     global USER_ID
-
     fill_departments()
 
     if request.method == "POST":
@@ -63,14 +62,17 @@ def sklad():
     return render_template("sklad.html", warehouses=WAREHOUSES)
 
 
-@app.route("/admin_home/otchet")
+@app.route("/admin_home/otchet", methods=["GET", "POST"])
 def otchet():
 
     if request.method == "POST":
-        print(request.form["start_date"])
-        print(request.form["end_date"])
+        fill_report_warehouse(request.form["start_date"],
+                              request.form["end_date"])
 
+        for i in ITEMSONSKLAD:
+            print(i.type_item)
 
+        return render_template(ITEMSONSKLAD[-1].type_item)
     return render_template("otchet.html")
 
 

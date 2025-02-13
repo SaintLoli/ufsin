@@ -44,8 +44,8 @@ class Warehouse:
 
 class ItemsOnSklad:
     def __init__(self, iditem, typeitem, stock):
-        self.iditem = iditem
-        self.typeitem = typeitem
+        self.id_item = iditem
+        self.type_item = typeitem
         self.stock = stock
 
         self.id = ''

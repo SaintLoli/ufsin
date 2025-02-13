@@ -77,7 +77,7 @@ def fill_warehouses():
         WAREHOUSES[-1].id = id
         id += 1
 
-def report_warehouse(date_start, date_end):
+def fill_report_warehouse(date_start, date_end):
     global ITEMSONSKLAD
     ITEMSONSKLAD.clear()
     id = 1
