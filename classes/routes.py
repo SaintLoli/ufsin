@@ -65,6 +65,12 @@ def sklad():
 
 @app.route("/admin_home/otchet")
 def otchet():
+
+    if request.method == "POST":
+        print(request.form["start_date"])
+        print(request.form["end_date"])
+
+
     return render_template("otchet.html")
 
 

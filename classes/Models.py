@@ -41,3 +41,11 @@ class Warehouse:
         self.supervisor = supervisor
 
         self.id = ''
+
+class ItemsOnSklad:
+    def __init__(self, iditem, typeitem, stock):
+        self.iditem = iditem
+        self.typeitem = typeitem
+        self.stock = stock
+
+        self.id = ''

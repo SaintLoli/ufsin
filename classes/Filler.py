@@ -12,7 +12,7 @@ DEVICES = []
 USERS = []
 DEPARTMENTS = []
 WAREHOUSES = []
-
+ITEMSONSKLAD = []
 
 def fill_devices(USER_ID):
     global DEVICES
@@ -75,4 +75,17 @@ def fill_warehouses():
                                     whs[2]))
 
         WAREHOUSES[-1].id = id
+        id += 1
+
+def report_warehouse(date_start, date_end):
+    global ITEMSONSKLAD
+    ITEMSONSKLAD.clear()
+    id = 1
+
+    for item in database.generate_otchet_sklad(date_start, date_end):
+        ITEMSONSKLAD.append(ItemsOnSklad(item[0],
+                                    item[1],
+                                    item[2]))
+
+        ITEMSONSKLAD[-1].id = id
         id += 1

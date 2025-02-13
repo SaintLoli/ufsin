@@ -69,3 +69,9 @@ class DBHelper:
             return req[0]
         else:
             return None
+
+    def generate_otchet_sklad(self, date_start, date_end):
+         return self.cur.execute(
+             f"SELECT type_item, id_item, id_stock "
+             f"FROM item WHERE arrival_time >= ? AND arrival_time <= ?", (date_start, date_end)).fetchall()
+

@@ -86,12 +86,12 @@
 
                     <div class="col-md-3">
                         <label class="form-label">Дата начала</label>
-                        <input type="date" class="form-control" name="start_date">
+                        <input type="date" class="form-control" name="start_date1">
                     </div>
 
                     <div class="col-md-3">
                         <label class="form-label">Дата окончания</label>
-                        <input type="date" class="form-control" name="end_date">
+                        <input type="date" class="form-control" name="end_date2">
                     </div>
 
                     <div class="col-md-3">
@@ -109,6 +109,9 @@
                         </button>
                         <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#newReportModal">
                             Создать новый отчет
+                        </button>
+                        <button type="button" class="btn btn-info mt-2" data-bs-toggle="modal" data-bs-target="">
+                            Найти отчет
                         </button>
                     </div>
                 </div>
@@ -179,7 +182,7 @@
                 <h5 class="modal-title">Новый отчет</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
-            <form method="POST" action="/create_report">
+            <form method="POST">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Тип отчета</label>
@@ -191,13 +194,13 @@
                         </select>
                     </div>
 
-                    <!-- Общие поля -->
+
                     <div class="mb-3">
                         <label class="form-label">Название отчета</label>
                         <input type="text" class="form-control" required name="report_name">
                     </div>
 
-                    <!-- Поля для отчета по сотруднику -->
+
                     <div class="mb-3" id="employeeField" style="display: none;">
                         <label class="form-label">Сотрудник</label>
                         <select class="form-select" name="employee_id">
@@ -206,7 +209,6 @@
                         </select>
                     </div>
 
-                    <!-- Поля для периода -->
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="form-label">Дата начала</label>
@@ -218,7 +220,7 @@
                         </div>
                     </div>
 
-                    <!-- Дополнительные параметры -->
+
                     <div class="mb-3">
                         <label class="form-label">Формат отчета</label>
                         <select class="form-select" name="format">
@@ -238,7 +240,7 @@
 </div>
 
     <script>
-    // Показ/скрытие полей в зависимости от типа отчета
+
     document.getElementById('reportTypeSelect').addEventListener('change', function() {
         const employeeField = document.getElementById('employeeField');
         employeeField.style.display = this.value === 'employee' ? 'block' : 'none';
