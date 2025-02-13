@@ -72,7 +72,6 @@ def otchet():
         for i in ITEMSONSKLAD:
             print(i.type_item)
 
-        return render_template(ITEMSONSKLAD[-1].type_item)
     return render_template("otchet.html")
 
 
