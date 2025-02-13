@@ -84,8 +84,11 @@ def fill_report_warehouse(date_start, date_end):
 
     for item in database.generate_otchet_sklad(date_start, date_end):
         ITEMSONSKLAD.append(ItemsOnSklad(item[0],
-                                    item[1],
-                                    item[2]))
+                                    TABLENAMES[item[1]],
+                                    database.get_warehouse_by_id(item[2]),
+                                    database.get_item_name_by_type(item[0], item[1])))
+
+        print(item[1], TABLENAMES[item[1]])
 
         ITEMSONSKLAD[-1].id = id
         id += 1

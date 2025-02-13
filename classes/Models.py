@@ -43,9 +43,10 @@ class Warehouse:
         self.id = ''
 
 class ItemsOnSklad:
-    def __init__(self, iditem, typeitem, stock):
+    def __init__(self, iditem, typeitem, stock, name):
         self.id_item = iditem
         self.type_item = typeitem
         self.stock = stock
+        self.name = name
 
         self.id = ''

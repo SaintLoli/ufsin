@@ -75,3 +75,13 @@ class DBHelper:
              f"SELECT id_item, type_item, id_stock "
              f"FROM item WHERE arrival_time >= ? AND arrival_time <= ?", (date_start, date_end)).fetchall()
 
+
+    def get_warehouse_by_id(self, id):
+        return self.cur.execute(
+            "SELECT name FROM sklad WHERE id=?", (id, )
+        ).fetchone()[0]
+
+    def get_item_name_by_type(self, id, type):
+        return self.cur.execute(
+            f"SELECT name FROM {type} WHERE id=?", (id, )
+        ).fetchone()[0]

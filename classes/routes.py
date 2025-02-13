@@ -69,10 +69,10 @@ def otchet():
         fill_report_warehouse(request.form["start_date"],
                               request.form["end_date"])
 
-        for i in ITEMSONSKLAD:
-            print(i.type_item)
+        return render_template("otchet_ready.html", wrhs_items=ITEMSONSKLAD, name=request.form["report_name"])
 
     return render_template("otchet.html")
+
 
 
 @app.route("/admin_home/departments")
