@@ -18,9 +18,10 @@ def fill_devices(USER_ID):
     global DEVICES
     DEVICES.clear()
     id = 1
+    fio = database.get_user_fio(USER_ID)
 
     PC = database.get_computer_info(int(USER_ID))
-    DEVICES.append(Device(", <br>".join(PC[:4]), "Системный блок", "В эксплуатации", PC[4], PC[5]))
+    DEVICES.append(Device(PC[6], "Системный блок", "В эксплуатации", PC[4], PC[5], fio, PC[:4]))
     DEVICES[-1].id = id
     id += 1
 
