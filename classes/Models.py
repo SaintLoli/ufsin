@@ -1,5 +1,5 @@
 class Device:
-    def __init__(self, name, type, status, year='', s_number='', user_fio='',name_pc =''):
+    def __init__(self, name, type, status, year='', s_number='', user_fio='', name_pc=''):
         self.name = name
         self.type = type
         self.status = status
@@ -8,6 +8,7 @@ class Device:
         self.s_number = s_number
         self.user_fio = user_fio
         self.name_pc = name_pc
+
         self.id = ''
 
 

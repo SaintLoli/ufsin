@@ -21,7 +21,7 @@ def fill_devices(USER_ID):
     fio = database.get_user_fio(USER_ID)
 
     PC = database.get_computer_info(int(USER_ID))
-    DEVICES.append(Device(PC[6], "Системный блок", "В эксплуатации", PC[4], PC[5], fio, PC[:4]))
+    DEVICES.append(Device(database.get_pc_name_by_user_id(USER_ID), "Системный блок", "В эксплуатации", PC[4], PC[5], fio, PC[:4]))
     DEVICES[-1].id = id
     id += 1
 
@@ -77,6 +77,7 @@ def fill_warehouses():
 
         WAREHOUSES[-1].id = id
         id += 1
+
 
 def fill_report_warehouse(date_start, date_end):
     global ITEMSONSKLAD
