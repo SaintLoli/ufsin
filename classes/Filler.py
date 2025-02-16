@@ -94,6 +94,3 @@ def fill_report_warehouse(date_start, date_end):
 
         ITEMSONSKLAD[-1].id = id
         id += 1
-
-
-"""tesdr"""
