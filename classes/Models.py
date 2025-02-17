@@ -1,5 +1,5 @@
 class Device:
-    def __init__(self, name, type, status, year='', s_number='', user_fio='', name_pc=''):
+    def __init__(self, name, type, status, year='', s_number='', user_fio='', name_pc='', cpu='', motherboard='', gpu='', ram=''):
         self.name = name
         self.type = type
         self.status = status
@@ -9,6 +9,10 @@ class Device:
         self.user_fio = user_fio
         self.name_pc = name_pc
 
+        self.cpu = cpu
+        self.motherboard = motherboard
+        self.gpu = gpu
+        self.ram = ram
         self.id = ''
 
 

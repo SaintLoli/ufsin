@@ -161,8 +161,9 @@
                 </div>
                 <div class="modal-body">
                 <p><strong>Наименование:</strong> <span id="modalSystemBlockName"></span></p>
+                    <p><strong>Владелец:</strong> <span id="modalSystemDeviceFio"></span></p>
+                    <p><strong>ЦПУ:</strong> <span id="modalSystemBlockCPU"></span></p>
                 <p><strong>Материнская плата:</strong> <span id="modalSystemBlockMotherboard"></span></p>
-                <p><strong>ЦПУ:</strong> <span id="modalSystemBlockCPU"></span></p>
                 <p><strong>ГПУ:</strong> <span id="modalSystemBlockGPU"></span></p>
                 <p><strong>ОЗУ:</strong> <span id="modalSystemBlockRAM"></span></p>
                 <p><strong>Серийный номер:</strong> <span id="modalSystemBlockSNumber"></span></p>
@@ -264,8 +265,10 @@
         var deviceCPU = button.getAttribute('data-device-cpu');
         var deviceGPU = button.getAttribute('data-device-gpu');
         var deviceRAM = button.getAttribute('data-device-ram');
+        var deviceFio = button.getAttribute('data-device-fio');
 
         document.getElementById('modalSystemBlockName').textContent = deviceName;
+        document.getElementById('modalSystemDeviceFio').textContent = deviceFio || "Не указано";
         document.getElementById('modalSystemBlockMotherboard').textContent = deviceMotherboard || "Не указано";
         document.getElementById('modalSystemBlockCPU').textContent = deviceCPU || "Не указано";
         document.getElementById('modalSystemBlockGPU').textContent = deviceGPU || "Не указано";
