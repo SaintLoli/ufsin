@@ -28,7 +28,6 @@ def redirect_to_panel():
 @app.route('/pc_register', methods=['GET', 'POST'])
 def pc_register():
     PC = PCInfo()
-
     if request.method == "POST":
         if request.form:
             USER_DEVICES['cpu'] = request.form.get('cpu')

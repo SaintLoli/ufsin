@@ -63,7 +63,7 @@ function validateForm(event) {
     });
 
     // Отправляем данные через fetch
-    fetch('/test', {
+    fetch('/pc_register', {
         method: 'POST',
         body: formData
     })
