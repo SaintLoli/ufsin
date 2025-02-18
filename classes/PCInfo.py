@@ -45,6 +45,10 @@ def get_pc_name():
     key = OpenKey(REGISTRY, r"SYSTEM\CurrentControlSet\Control\ComputerName\ComputerName")
     return QueryValueEx(key, "ComputerName")[0]
 
+def get_usb_devices():
+    """"""
+
+    return None
 
 if __name__ == "__main__":
     PC = PCInfo()

@@ -15,15 +15,20 @@
             display: none;
             margin-top: 20px;
         }
+        .device-fields {
+            margin-top: 10px;
+        }
     </style>
+
+    <script src="{{ url_for('static', filename='js/check.js') }}"></script>
 </head>
 <body>
     <div class="container">
         <h2 class="mb-4">Проверка характеристик компьютера</h2>
 
         <div class="card p-4" id="checkForm">
+            <h3 align="center">Система</h3>
             <form id="pcCheckForm" onsubmit="return validateForm(event)" method="post">
-
 
                 <div class="mb-3">
                     <label for="cpu" class="form-label">Процессор (CPU)</label>
@@ -43,7 +48,6 @@
                            placeholder="Например, NVIDIA GTX 1080" value="{{gpu}}">
                 </div>
 
-
                 <div class="mb-3">
                     <label for="ram" class="form-label">Оперативная память (ГБ)</label>
                     <input type="number" class="form-control" id="ram" name="ram" required
@@ -53,7 +57,7 @@
                 <div class="mb-3">
                     <label for="year" class="form-label">Год выпуска</label>
                     <input type="number" class="form-control" id="year" name="year" required
-                           min="2000" max="2024" placeholder="Год выпуска ПК">
+                           min="123" max="2025" placeholder="Год выпуска ПК">
                 </div>
 
                 <div class="mb-3">
@@ -62,52 +66,57 @@
                            placeholder="Например, SN-45678901">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Проверить</button>
+                <div id="devicesContainer"></div>
+
+                <button type="button" class="btn btn-secondary mt-3" onclick="addDeviceFields()">Добавить устройство</button>
+                <button type="submit" class="btn btn-primary mt-3">Проверить</button>
             </form>
         </div>
 
-        <div class="card p-4 results" id="results">
-            <h4>Результаты проверки:</h4>
-            <div id="checkResults"></div>
-            <button class="btn btn-secondary mt-3" onclick="resetForm()">Проверить снова</button>
-        </div>
+        <form action="/add_devices" id="submitForm" method="post">
+            <div class="card p-4 results" id="results">
+                <h4 align="center">Результаты проверки:</h4>
+                <div id="checkResults"></div>
+                <button type="button" class="btn btn-secondary mt-3" onclick="resetForm()">Изменить</button>
+                <button type="submit" class="btn btn-primary mt-3" id="endChanges">Завершить</button>
+            </div>
+        </form>
     </div>
 
     <script>
-        ///function validateForm(event) {
-            event.preventDefault();
-
-
-            const gpu = document.getElementById('gpu').value;
-            const cpu = document.getElementById('cpu').value;
-            const motherboard = document.getElementById('motherboard').value;
-            const year = document.getElementById('year').value;
-            const ram = document.getElementById('ram').value;
-
-
-            const resultsHTML = `
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>GPU:</strong> ${gpu}</li>
-                    <li class="list-group-item"><strong>CPU:</strong> ${cpu}</li>
-                    <li class="list-group-item"><strong>Материнская плата:</strong> ${motherboard}</li>
-                    <li class="list-group-item"><strong>Год выпуска:</strong> ${year}</li>
-                    <li class="list-group-item"><strong>ОЗУ:</strong> ${ram} ГБ</li>
-                </ul>
+        function addDeviceFields() {
+            count++;
+            const deviceFields = `
+                <div class="device-fields">
+                    <hr>
+                    <div>
+                        <h3 align="center" id="test_${count}">Устройство &{count}</h3>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Тип устройства</label>
+                        <select class="form-control device-type">
+                            {% for device in devices.keys() %}
+                                <option value={{device}}>{{devices[device]}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Название</label>
+                        <input type="text" class="form-control device-name" name="device_name_${count}" placeholder="Название устройства">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Серийный номер</label>
+                        <input type="text" class="form-control device-serial" name="device_s_number_${count}" placeholder="Серийный номер">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Год выпуска</label>
+                        <input type="number" class="form-control device-year" name="device_year_${count}" min="123" max="2025" placeholder="Год выпуска">
+                    </div>
+                </div>
             `;
-
-
-            document.getElementById('checkResults').innerHTML = resultsHTML;
-            document.getElementById('checkForm').style.display = 'none';
-            document.getElementById('results').style.display = 'block';
-
-            return false;
+            document.getElementById('devicesContainer').insertAdjacentHTML('beforeend', deviceFields);
+            document.getElementById('test_'+ count).textContent = "Устройство " + count;
         }
-
-        function resetForm() {
-            document.getElementById('checkForm').style.display = 'block';
-            document.getElementById('results').style.display = 'none';
-            document.getElementById('pcCheckForm').reset();
-        }///
     </script>
 </body>
 </html>

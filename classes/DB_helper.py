@@ -33,7 +33,7 @@ class DBHelper:
 
     def get_computer_info(self, user_id):
         return self.cur.execute(
-            f"SELECT motherboard, gpu, cpu, ram, year, serial_number FROM comp WHERE id_user=?", str(user_id)
+            f"SELECT motherboard, gpu, cpu, ram, year, serial_number FROM comp WHERE id_user=?", (user_id, )
         ).fetchone()
 
     def get_pc_name_by_user_id(self, user_id):
@@ -52,7 +52,13 @@ class DBHelper:
             return None
 
     def get_item(self, item, user_id):
-        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", str(user_id)).fetchone()
+        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchone()
+
+    def add_item(self, item_type, name, user_id):
+        self.cur.execute(
+            f"INSERT INTO {item_type} (id_user, name) VALUES (?, ?)", (user_id, name)
+        )
+        self.con.commit()
 
     def get_users(self):
         return self.cur.execute(
@@ -61,7 +67,7 @@ class DBHelper:
 
     def get_user_fio(self, user_id):
         return self.cur.execute(
-            f"SELECT fio FROM user WHERE id = ?", str(user_id)
+            f"SELECT fio FROM user WHERE id = ?", (user_id, )
         ).fetchone()[0]
 
     def get_departments(self):
