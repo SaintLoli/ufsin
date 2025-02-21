@@ -4,18 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="nakone4 ya cdelal registraciy">
-      <change afterPath="$PROJECT_DIR$/layout/check_old.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/check.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/jquery-3.7.1.min.js" afterDir="false" />
+    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="Kartochki ustroistv">
+      <change afterPath="$PROJECT_DIR$/layout/organization.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/Filler.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Filler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/PCInfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/PCInfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/TABLENAMES.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TABLENAMES.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layout/check.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/check.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,13 +21,16 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2sZQyDpMYlzvmDu3f5ZB5lJJheD" />
   <component name="ProjectViewState">
@@ -398,7 +397,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1st commit" />

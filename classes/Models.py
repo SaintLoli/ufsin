@@ -57,7 +57,13 @@ class ItemsOnSklad:
 
         self.id = ''
 
+class Organization:
+    def __init__(self, name, address, priority):
+        self.name = name
+        self.address = address
+        self.priority = priority
 
+        self.id = ''
 
 
 

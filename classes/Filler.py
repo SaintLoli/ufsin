@@ -13,7 +13,7 @@ USERS = []
 DEPARTMENTS = []
 WAREHOUSES = []
 ITEMSONSKLAD = []
-
+ORGANIZATIONS=[]
 def fill_devices(USER_ID):
     global DEVICES
     DEVICES.clear()
@@ -51,12 +51,12 @@ def fill_users():
         id += 1
 
 
-def fill_departments():
+def fill_departments(name):
    global DEPARTMENTS
    DEPARTMENTS.clear()
    id = 1
 
-   for dep in database.get_departments():
+   for dep in database.get_departments(name):
        DEPARTMENTS.append(Office(dep[0],
                                  dep[1],
                                  dep[2],
@@ -93,4 +93,15 @@ def fill_report_warehouse(date_start, date_end):
                                          database.get_item_name_by_type(item[0], item[1])))
 
         ITEMSONSKLAD[-1].id = id
+        id += 1
+
+def fill_organizations(role, organization):
+    global ORGANIZATIONS
+    ORGANIZATIONS.clear()
+    id = 1
+    for item in database.get_organizations(role, organization):
+        ORGANIZATIONS.append(Organization(item[0], item[1], item[2]))
+
+        ORGANIZATIONS[-1].id = id
+
         id += 1

@@ -70,12 +70,18 @@ class DBHelper:
             f"SELECT fio FROM user WHERE id = ?", (user_id, )
         ).fetchone()[0]
 
-    def get_departments(self):
+    def get_priority_by_organization_name(self, organization):
+        return self.cur.execute(
+            f"SELECT priority FROM organization WHERE name = ?", (organization,)
+        ).fetchone()[0]
+
+    def get_departments(self, name):
         return self.cur.execute(
             """
-            SELECT key, name, user.fio, address, phone FROM offices 
-            LEFT  JOIN user ON offices.supervisor == user.id;
-            """
+            SELECT key, name, user.fio, address, phone FROM offices
+            LEFT  JOIN user ON offices.supervisor == user.id
+            WHERE offices.organization = ?;
+            """,  (name,)
         ).fetchall()
 
     def get_warehouses(self):
@@ -114,3 +120,16 @@ class DBHelper:
         return self.cur.execute(
             f"SELECT name FROM {type} WHERE id=?", (id, )
         ).fetchone()[0]
+
+    def get_user_role(self, id):
+        return self.cur.execute(
+            f"SELECT role FROM user WHERE id=?", (id ,)
+        ).fetchone()[0]
+
+    def get_organizations(self, role, organization):
+        if(role==1):
+            return self.cur.execute(
+                f"SELECT name, address, priority FROM organization "
+            ).fetchall()
+
+

@@ -20,6 +20,9 @@ def redirect_to_panel():
     if not USER_ID:
         database.add_pc_name(get_pc_name())
         USER_ID = (database.get_user_id_by_pc_name(get_pc_name()))
+
+
+
         return redirect(url_for("pc_register"))
 
     return redirect(url_for('admin_panel'))
@@ -78,12 +81,22 @@ def add_devices():
 
 
 
-@app.route("/admin_home")
+@app.route("/admin_home",methods=['GET', 'POST'])
 def admin_panel():
     fill_devices(USER_ID)
+    USER_ROLE = (database.get_user_role(USER_ID))
+    if(USER_ROLE==1):
+        fill_organizations(USER_ROLE, "first")
 
-    return render_template("admin_home.html",
-                           devices=DEVICES)
+        return render_template("organization.html", organization=ORGANIZATIONS)
+    if (USER_ROLE == 2):
+        fill_organizations(USER_ROLE, "first")
+
+        return render_template("organization.html"
+                               , organization=ORGANIZATIONS)
+    else:
+        return render_template("admin_home.html",
+            devices=DEVICES)
 
 
 @app.route("/admin_home/staff")
@@ -110,12 +123,19 @@ def otchet():
 
 
 
-@app.route("/admin_home/departments")
-def departments():
-    fill_departments()
+@app.route("/admin_home/<name>/departments")
+def departments(name):
+    name = name
+    fill_departments(name)
     return render_template("departments.html",
                            departments=DEPARTMENTS)
 
+
+# @app.route("/admin_home/departments")
+# def departments():
+#     fill_departments()
+#     return render_template("departments.html",
+#                            departments=DEPARTMENTS)
 
 # @app.route("/check_data", methods=["GET", "POST"])
 # def check_data():

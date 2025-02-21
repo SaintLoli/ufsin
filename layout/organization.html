@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Учет техники УФСИН РК</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header {
+            background-color: #004085;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        .nav-scroller {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        .org-table {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,.12);
+        }
+        .table thead th {
+            background-color: #004085;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>Учет техники УФСИН РК</h1>
+        <p class="lead">Система учета техники</p>
+    </header>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Главная</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/home/organizations">Организации</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/sklad">Склад</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home/reports">Отчеты</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container org-table">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Название организации</th>
+                        <th>Адрес</th>
+                        <th>Приоритет</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for org in organization %}
+                    <tr>
+                        <td>{{org.id}}</td>
+                        <td>
+                            <a href="/admin_home/{{org.name}}/departments" target="_blank" class="text-decoration-none">
+                                {{org.name}}<br>
+                                <!--<small class="text-muted">ИНН: {{org.inn}}</small>-->
+                            </a>
+                        </td>
+                        <td>{{org.address}}</td>
+                        <td>{{org.priority}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
