@@ -86,12 +86,12 @@ def admin_panel():
     fill_devices(USER_ID)
     USER_ROLE = (database.get_user_role(USER_ID))
     if(USER_ROLE==1):
-        fill_organizations(USER_ROLE, "first")
+
+        fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
 
         return render_template("organization.html", organization=ORGANIZATIONS)
     if (USER_ROLE == 2):
-        fill_organizations(USER_ROLE, "first")
-
+        fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
         return render_template("organization.html"
                                , organization=ORGANIZATIONS)
     else:

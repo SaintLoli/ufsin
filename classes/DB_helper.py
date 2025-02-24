@@ -126,10 +126,21 @@ class DBHelper:
             f"SELECT role FROM user WHERE id=?", (id ,)
         ).fetchone()[0]
 
+    def get_organization_name(self, id):
+
+        return self.cur.execute(
+            f"SELECT organization FROM user WHERE id = ?", (id, )
+        ).fetchone()[0]
+
     def get_organizations(self, role, organization):
         if(role==1):
             return self.cur.execute(
                 f"SELECT name, address, priority FROM organization "
+            ).fetchall()
+        elif (role == 2):
+
+            return self.cur.execute(
+                f"SELECT name, address, priority FROM organization WHERE priority = ? AND name = ?", (role, organization)
             ).fetchall()
 
 
