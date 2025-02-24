@@ -31,6 +31,7 @@ def redirect_to_panel():
 @app.route('/pc_register', methods=['GET', 'POST'])
 def pc_register():
     PC = PCInfo()
+
     if request.method == "POST":
         if request.form:
             USER_DEVICES['cpu'] = request.form.get('cpu')
@@ -85,10 +86,11 @@ def add_devices():
 def admin_panel():
     fill_devices(USER_ID)
     USER_ROLE = (database.get_user_role(USER_ID))
-    if(USER_ROLE==1):
+    if (USER_ROLE == 1):
         fill_organizations(USER_ROLE, "first")
 
         return render_template("organization.html", organization=ORGANIZATIONS)
+
     if (USER_ROLE == 2):
         fill_organizations(USER_ROLE, "first")
 
