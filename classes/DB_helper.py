@@ -140,7 +140,18 @@ class DBHelper:
         elif (role == 2):
 
             return self.cur.execute(
-                f"SELECT name, address, priority FROM organization WHERE priority = ? AND name = ?", (role, organization)
+                f"SELECT name, address, priority FROM organization WHERE priority = ? AND name = ?",
+                (role, organization)
             ).fetchall()
 
+    def get_office_id_by_name(self, office):
+        return self.cur.execute(
+            f"SELECT id FROM offices WHERE name = ?", (office,)
+        ).fetchone()[0]
 
+    def get_staff(self, organization, office):
+        print(organization, office)
+        return self.cur.execute(
+            f"SELECT fio, role, office, number, tubel_number FROM user WHERE office = ? ",
+            (office, )
+        ).fetchall()

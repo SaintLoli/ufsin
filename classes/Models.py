@@ -67,4 +67,13 @@ class Organization:
 
 
 
+class Staff:
+    def __init__(self, name, job_title, office, tel, tubel, status):
+        self.name = name
+        self.job_title = job_title
+        self.office = office
+        self.tel = tel
+        self.tubel = tubel
+        self.status = status
 
+        self.id = ''

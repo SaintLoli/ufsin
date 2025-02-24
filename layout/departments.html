@@ -82,11 +82,12 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     {% for dep in departments %}
                     <tr>
                         <td>{{dep.id}}</td>
                         <td>
-                            <a href="#" class="text-decoration-none">
+                            <a href="/admin_home/{{dep.name}}/staff" target="_blank" class="text-decoration-none">
                                 {{dep.name}}<br>
                                 <small class="text-muted">Код отдела: {{dep.key}}</small>
                             </a>
@@ -96,6 +97,7 @@
                         <td>{{dep.phone}}</td>
                         <td><span class="badge bg-success">{{dep.status}}</span></td>
                     </tr>
+
                     {% endfor %}
                 </tbody>
             </table>

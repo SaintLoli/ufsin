@@ -99,7 +99,7 @@ def admin_panel():
             devices=DEVICES)
 
 
-@app.route("/admin_home/staff")
+@app.route("/admin_home")
 def staff():
     fill_users()
     return render_template("staff.html", users=USERS)
@@ -129,6 +129,14 @@ def departments(name):
     fill_departments(name)
     return render_template("departments.html",
                            departments=DEPARTMENTS)
+
+@app.route("/admin_home/<office>/staff")
+def department_staff(office):
+    office = office
+    organization = database.get_organization_name(USER_ID)
+    fill_department_staff(organization, office)
+    return render_template("staff.html",
+                           users=STAFF)
 
 
 # @app.route("/admin_home/departments")

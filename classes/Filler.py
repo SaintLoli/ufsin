@@ -13,7 +13,10 @@ USERS = []
 DEPARTMENTS = []
 WAREHOUSES = []
 ITEMSONSKLAD = []
-ORGANIZATIONS=[]
+ORGANIZATIONS = []
+STAFF = []
+
+
 def fill_devices(USER_ID):
     global DEVICES
     DEVICES.clear()
@@ -105,4 +108,19 @@ def fill_organizations(role, organization):
         ORGANIZATIONS.append(Organization(item[0], item[1], item[2]))
 
         ORGANIZATIONS[-1].id = id
+        id += 1
+
+def fill_department_staff(organization, office):
+    global STAFF
+    STAFF.clear()
+    id = 1
+
+    for user in database.get_staff(organization, database.get_office_id_by_name(office)):
+        STAFF.append(Staff(user[0],
+                          user[1] if not None else '',
+                          database.get_dep_name_by_id(user[2]) if not None else '',
+                          user[3] if not None else '',
+                          user[4] if not None else '',
+                          "Активен"))
+        STAFF[-1].id = id
         id += 1
