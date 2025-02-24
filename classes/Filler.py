@@ -95,13 +95,14 @@ def fill_report_warehouse(date_start, date_end):
         ITEMSONSKLAD[-1].id = id
         id += 1
 
+
 def fill_organizations(role, organization):
     global ORGANIZATIONS
     ORGANIZATIONS.clear()
     id = 1
+
     for item in database.get_organizations(role, organization):
         ORGANIZATIONS.append(Organization(item[0], item[1], item[2]))
 
         ORGANIZATIONS[-1].id = id
-
         id += 1
