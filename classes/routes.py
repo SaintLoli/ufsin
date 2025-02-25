@@ -8,15 +8,17 @@ database = DBHelper()
 '''Информация о пользователе'''
 USER_ID = ''
 USER_ROLE = ''
+USER_ORGANIZATION = ''
 '''Девайсы на момент заполнения'''
 USER_DEVICES = JSON_FORM.copy()
 
 @app.route('/')
 def redirect_to_panel():
-    global USER_ID, USER_ROLE
+    global USER_ID, USER_ROLE, USER_ORGANIZATION
 
     USER_ID = database.get_user_id_by_pc_name(get_pc_name())
     USER_ROLE = database.get_user_role(USER_ID)
+    USER_ORGANIZATION = database.get_user_organization_by_id(USER_ID)
     if not USER_ID:
         database.add_pc_name(get_pc_name())
         USER_ID = (database.get_user_id_by_pc_name(get_pc_name()))
@@ -124,25 +126,30 @@ def otchet():
 
 @app.route("/admin_home/<name>/departments")
 def departments(name):
-    name = name
-    fill_departments(name)
-    return render_template("departments.html",
-                           departments=DEPARTMENTS)
+    if (USER_ROLE<=2):
+        if(USER_ORGANIZATION==name or USER_ORGANIZATION =='main'):
+            name = name
+            fill_departments(name)
+            return render_template("departments.html",
+                                departments=DEPARTMENTS)
 
 @app.route("/admin_home/<office>/staff")
 def department_staff(office):
-    office = office
-    organization = database.get_organization_name(USER_ID)
-    fill_department_staff(organization, office)
-    return render_template("staff.html",
-                           users=STAFF)
+
+    if (USER_ROLE <= 2 and ( database.get_department_organization_by_department_name(office) == USER_ORGANIZATION or USER_ORGANIZATION == 'main')):
+        organization = database.get_organization_name(USER_ID)
+        office = office
+        fill_department_staff(organization, office)
+        return render_template("staff.html",
+                               users=STAFF)
 @app.route("/admin_home/staff/<name>")
 def user_devices(name):
     name = name
     this_user_id = database.get_user_id_by_name(name)
-    fill_devices(this_user_id)
-    return render_template("admin_home.html",
-                    devices=DEVICES)
+    if (USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main')):
+        fill_devices(this_user_id)
+        return render_template("admin_home.html",
+                        devices=DEVICES)
 
 
 # @app.route("/admin_home/departments")
