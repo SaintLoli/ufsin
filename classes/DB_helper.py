@@ -155,3 +155,7 @@ class DBHelper:
             f"SELECT fio, role, office, number, tubel_number FROM user WHERE office = ? ",
             (office, )
         ).fetchall()
+    def get_user_id_by_name(self, name):
+        return self.cur.execute(
+            f"SELECT id FROM user WHERE fio = ?", (name,)
+        ).fetchone()[0]

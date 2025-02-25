@@ -7,16 +7,16 @@ database = DBHelper()
 
 '''Информация о пользователе'''
 USER_ID = ''
-
+USER_ROLE = ''
 '''Девайсы на момент заполнения'''
 USER_DEVICES = JSON_FORM.copy()
 
 @app.route('/')
 def redirect_to_panel():
-    global USER_ID
+    global USER_ID, USER_ROLE
 
     USER_ID = database.get_user_id_by_pc_name(get_pc_name())
-
+    USER_ROLE = database.get_user_role(USER_ID)
     if not USER_ID:
         database.add_pc_name(get_pc_name())
         USER_ID = (database.get_user_id_by_pc_name(get_pc_name()))
@@ -84,7 +84,6 @@ def add_devices():
 @app.route("/admin_home",methods=['GET', 'POST'])
 def admin_panel():
     fill_devices(USER_ID)
-    USER_ROLE = (database.get_user_role(USER_ID))
     if(USER_ROLE==1):
 
         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
@@ -137,6 +136,13 @@ def department_staff(office):
     fill_department_staff(organization, office)
     return render_template("staff.html",
                            users=STAFF)
+@app.route("/admin_home/staff/<name>")
+def user_devices(name):
+    name = name
+    this_user_id = database.get_user_id_by_name(name)
+    fill_devices(this_user_id)
+    return render_template("admin_home.html",
+                    devices=DEVICES)
 
 
 # @app.route("/admin_home/departments")

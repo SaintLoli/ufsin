@@ -49,16 +49,14 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/home">Главная</a>
+                        <a class="nav-link active" href="/admin_home">Главная</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin_home/sklad">Склад</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/home/organizations">Организации</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/sklad">Склад</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/reports">Отчеты</a>
+                        <a class="nav-link" href="/admin_home/otchet">Отчеты</a>
                     </li>
                 </ul>
             </div>
@@ -81,7 +79,7 @@
                     <tr>
                         <td>{{org.id}}</td>
                         <td>
-                            <a href="/admin_home/{{org.name}}/departments" target="_blank" class="text-decoration-none">
+                            <a href="/admin_home/{{org.name}}/departments" target="_self" class="text-decoration-none">
                                 {{org.name}}<br>
                                 <!--<small class="text-muted">ИНН: {{org.inn}}</small>-->
                             </a>
