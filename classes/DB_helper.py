@@ -1,25 +1,23 @@
 import sqlite3
 import hashlib
 
+
 class DBHelper:
     def __init__(self):
         self.con = sqlite3.connect('DB/UFSIN_DB.db', check_same_thread=False)
         self.cur = self.con.cursor()
 
-    def add_user(self, fio, number, tubel_number, dep):
-        self.cur.execute(f"INSERT INTO user (fio, number, tubel_number, office) VALUES "
-                         f"(?, ?, ?, ?, ?, ?)",
-                         (fio, number, tubel_number, self.get_dep_id_by_name(dep)[0]))
-        self.con.commit()
+
 
     def check_user(self, login, password):
-        if self.cur.execute(f"SELECT * FROM user WHERE login=? and password=?", (login, hashlib.md5(password.encode()).hexdigest())).fetchone():
+        if self.cur.execute(f"SELECT * FROM user WHERE login=? and password=?",
+                            (login, hashlib.md5(password.encode()).hexdigest())).fetchone():
             return True
         else:
             return False
 
     def add_pc_name(self, pc_name):
-        self.cur.execute(f"INSERT INTO user (pc_name) VALUES (?)", (pc_name, ))
+        self.cur.execute(f"INSERT INTO user (pc_name) VALUES (?)", (pc_name,))
         self.con.commit()
 
     def get_user_id(self, login):
@@ -33,17 +31,17 @@ class DBHelper:
 
     def get_computer_info(self, user_id):
         return self.cur.execute(
-            f"SELECT motherboard, gpu, cpu, ram, year, serial_number FROM comp WHERE id_user=?", (user_id, )
+            f"SELECT motherboard, gpu, cpu, ram, year, serial_number FROM comp WHERE id_user=?", (user_id,)
         ).fetchone()
 
     def get_pc_name_by_user_id(self, user_id):
         return self.cur.execute(
-            "SELECT pc_name FROM user WHERE id=?", (user_id, )
+            "SELECT pc_name FROM user WHERE id=?", (user_id,)
         ).fetchone()[0]
 
     def get_user_id_by_pc_name(self, pc_name):
         req = self.cur.execute(
-            f"SELECT id FROM user WHERE pc_name=?", (pc_name, )
+            f"SELECT id FROM user WHERE pc_name=?", (pc_name,)
         ).fetchone()
 
         if req:
@@ -52,7 +50,7 @@ class DBHelper:
             return None
 
     def get_item(self, item, user_id):
-        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchone()
+        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id,)).fetchone()
 
     def add_item(self, item_type, name, user_id):
         self.cur.execute(
@@ -67,7 +65,7 @@ class DBHelper:
 
     def get_user_fio(self, user_id):
         return self.cur.execute(
-            f"SELECT fio FROM user WHERE id = ?", (user_id, )
+            f"SELECT fio FROM user WHERE id = ?", (user_id,)
         ).fetchone()[0]
 
     def get_priority_by_organization_name(self, organization):
@@ -81,7 +79,7 @@ class DBHelper:
             SELECT key, name, user.fio, address, phone FROM offices
             LEFT  JOIN user ON offices.supervisor == user.id
             WHERE offices.organization = ?;
-            """,  (name,)
+            """, (name,)
         ).fetchall()
 
     def get_warehouses(self):
@@ -94,12 +92,12 @@ class DBHelper:
 
     def get_dep_id_by_name(self, dep_name):
         return self.cur.execute(
-            "SELECT id FROM offices WHERE name=?", (dep_name, )
+            "SELECT id FROM offices WHERE name=?", (dep_name,)
         ).fetchone()
 
     def get_dep_name_by_id(self, dep_id):
         req = self.cur.execute(
-            "SELECT name FROM offices WHERE id=?", (dep_id, )
+            "SELECT name FROM offices WHERE id=?", (dep_id,)
         ).fetchone()
         if req:
             return req[0]
@@ -107,40 +105,40 @@ class DBHelper:
             return None
 
     def generate_otchet_sklad(self, date_start, date_end):
-         return self.cur.execute(
-             f"SELECT id_item, type_item, id_stock "
-             f"FROM item WHERE arrival_time >= ? AND arrival_time <= ?", (date_start, date_end)).fetchall()
+        return self.cur.execute(
+            f"SELECT id_item, type_item, id_stock "
+            f"FROM item WHERE arrival_time >= ? AND arrival_time <= ?", (date_start, date_end)).fetchall()
 
     def get_warehouse_by_id(self, id):
         return self.cur.execute(
-            "SELECT name FROM sklad WHERE id=?", (id, )
+            "SELECT name FROM sklad WHERE id=?", (id,)
         ).fetchone()[0]
 
     def get_item_name_by_type(self, id, type):
         return self.cur.execute(
-            f"SELECT name FROM {type} WHERE id=?", (id, )
+            f"SELECT name FROM {type} WHERE id=?", (id,)
         ).fetchone()[0]
 
     def get_user_role(self, id):
         return self.cur.execute(
-            f"SELECT role FROM user WHERE id=?", (id ,)
+            f"SELECT role FROM user WHERE id=?", (id,)
         ).fetchone()[0]
 
     def get_organization_name(self, id):
 
         return self.cur.execute(
-            f"SELECT organization FROM user WHERE id = ?", (id, )
+            f"SELECT organization FROM user WHERE id = ?", (id,)
         ).fetchone()[0]
 
     def get_organizations(self, role, organization):
-        if(role==1):
+        if (role == 1):
             return self.cur.execute(
                 f"SELECT name, address, priority FROM organization "
             ).fetchall()
         elif (role == 2):
             return self.cur.execute(
                 f"SELECT name, address, priority FROM organization WHERE name = ?",
-                (organization, )
+                (organization,)
             ).fetchall()
 
     def get_office_id_by_name(self, office):
@@ -152,17 +150,26 @@ class DBHelper:
         print(organization, office)
         return self.cur.execute(
             f"SELECT fio, role, office, number, tubel_number FROM user WHERE office = ? ",
-            (office, )
+            (office,)
         ).fetchall()
+
     def get_user_id_by_name(self, name):
         return self.cur.execute(
             f"SELECT id FROM user WHERE fio = ?", (name,)
         ).fetchone()[0]
+
     def get_user_organization_by_id(self, id):
         return self.cur.execute(
             f"SELECT organization FROM user WHERE id = ?", (id,)
         ).fetchone()[0]
+
     def get_department_organization_by_department_name(self, name):
         return self.cur.execute(
             f"SELECT organization FROM offices WHERE name = ?", (name,)
         ).fetchone()[0]
+
+    def add_person(self, fio, role, organization, office, pc_name):
+        self.cur.execute(f"INSERT INTO user (fio, pc_name, role, office, organization)"
+                         f" VALUES (?, ?, ?, ?, ?)",
+                         (fio, pc_name, role, office, organization))
+        self.con.commit()

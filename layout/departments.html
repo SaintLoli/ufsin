@@ -32,6 +32,12 @@
             background-color: #004085;
             color: white;
         }
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
     </style>
 </head>
 
@@ -49,9 +55,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link " href="/admin_home">Главная</a>
+                        <a class="nav-link" href="/admin_home">Главная</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link active" href="/admin_home/departments">Подразделения</a>
                     </li>
@@ -80,7 +85,6 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     {% for dep in departments %}
                     <tr>
                         <td>{{dep.id}}</td>
@@ -95,10 +99,16 @@
                         <td>{{dep.phone}}</td>
                         <td><span class="badge bg-success">{{dep.status}}</span></td>
                     </tr>
-
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
+
+
+        <div class="action-buttons">
+            <button type="button" class="btn btn-primary">Добавить</button>
+            <button type="button" class="btn btn-warning">Изменить</button>
+            <button type="button" class="btn btn-danger">Удалить</button>
         </div>
     </main>
 
