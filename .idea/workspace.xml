@@ -4,14 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="Kartochki ustroistv">
-      <change afterPath="$PROJECT_DIR$/layout/organization.html" afterDir="false" />
+    <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="nakone4 ya cdelal registraciy">
+      <change afterPath="$PROJECT_DIR$/classes/Report.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/empty_template.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/items_on_warehouses.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Filler.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Filler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,16 +21,13 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2sZQyDpMYlzvmDu3f5ZB5lJJheD" />
   <component name="ProjectViewState">
@@ -92,6 +89,27 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classes/PCInfo.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Report" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ufsin" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/classes" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/classes/Report.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -166,6 +184,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.Report" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.PCInfo" />
         <item itemvalue="Python.Models" />
@@ -384,7 +403,14 @@
       <option name="project" value="LOCAL" />
       <updated>1739700317458</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="nakone4 ya cdelal registraciy">
+      <created>1740386882326</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1740386882326</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -397,6 +423,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="1st commit" />
@@ -416,6 +443,7 @@
     <MESSAGE value="otchet delaet post" />
     <MESSAGE value="othcet created" />
     <MESSAGE value="&quot;&quot;test" />
-    <option name="LAST_COMMIT_MESSAGE" value="&quot;&quot;test" />
+    <MESSAGE value="nakone4 ya cdelal registraciy" />
+    <option name="LAST_COMMIT_MESSAGE" value="nakone4 ya cdelal registraciy" />
   </component>
 </project>
