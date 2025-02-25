@@ -79,10 +79,10 @@ class Report:
             column -= 1
             cell = sheet.cell(row, column)
 
-        sheet.column_dimensions["A"] = 45
-        sheet.column_dimensions["B"] = 25
-        sheet.column_dimensions["C"] = 25
-        sheet.column_dimensions["D"] = 10
+        sheet.column_dimensions["A"].width = 45
+        sheet.column_dimensions["B"].width = 25
+        sheet.column_dimensions["C"].width = 25
+        sheet.column_dimensions["D"].width = 10
 
         self.workbook.save('new_example.xlsx')
 

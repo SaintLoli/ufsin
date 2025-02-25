@@ -4,8 +4,8 @@ from datetime import date
 
 
 class DBHelper:
-    def __init__(self):
-        self.con = sqlite3.connect('DB/UFSIN_DB.db', check_same_thread=False)
+    def __init__(self, filepath="DB/UFSIN_DB.db"):
+        self.con = sqlite3.connect(filepath, check_same_thread=False)
         self.cur = self.con.cursor()
 
 
