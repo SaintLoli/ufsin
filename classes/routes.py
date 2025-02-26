@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from classes.PCInfo import *
 from classes.Filler import *
+from classes.Report import Report
 
 app = Flask(__name__, template_folder="../layout", static_folder="../static")
 database = DBHelper()
@@ -117,10 +118,14 @@ def sklad():
 @app.route("/admin_home/otchet", methods=["GET", "POST"])
 def otchet():
     if request.method == "POST":
-        fill_report_warehouse(request.form["start_date"],
-                              request.form["end_date"])
+        if request.form.get("format") == "html":
+            fill_report_warehouse(request.form["start_date"],
+                                  request.form["end_date"])
 
-        return render_template("otchet_ready.html", wrhs_items=ITEMSONSKLAD, name=request.form["report_name"])
+            return render_template("otchet_ready.html", wrhs_items=ITEMSONSKLAD, name=request.form["report_name"])
+
+        elif request.form.get("format") == "excel":
+            Report(request.form.get("report_type"), database=database, template_path="templates/")
 
     return render_template("otchet.html")
 
@@ -128,8 +133,8 @@ def otchet():
 
 @app.route("/admin_home/<name>/departments")
 def departments(name):
-    if (USER_ROLE<=2):
-        if(USER_ORGANIZATION==name or USER_ORGANIZATION =='main'):
+    if (USER_ROLE <= 2):
+        if(USER_ORGANIZATION == name or USER_ORGANIZATION == 'main'):
             name = name
             fill_departments(name)
             return render_template("departments.html",

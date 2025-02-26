@@ -6,8 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/Report.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layout/otchet.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/otchet.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -413,7 +414,14 @@
       <option name="project" value="LOCAL" />
       <updated>1740486372986</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="poshlo vse v 4opy">
+      <created>1740486859771</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1740486859771</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -448,6 +456,7 @@
     <MESSAGE value="&quot;&quot;test" />
     <MESSAGE value="nakone4 ya cdelal registraciy" />
     <MESSAGE value="othcets" />
-    <option name="LAST_COMMIT_MESSAGE" value="othcets" />
+    <MESSAGE value="poshlo vse v 4opy" />
+    <option name="LAST_COMMIT_MESSAGE" value="poshlo vse v 4opy" />
   </component>
 </project>
