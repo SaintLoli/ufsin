@@ -17,7 +17,6 @@ class Report:
             self.workbook = openpyxl.load_workbook(template_path + "items_on_warehouses_remove_status.xlsx")
             self.fill_items_on_warehouses(status="removed")
         elif template_name == "items_on_warehouses_underchange_status":
-            print(23233224323432)
             self.workbook = openpyxl.load_workbook(template_path + "items_on_warehouses_underchange_status.xlsx")
             self.fill_items_on_warehouses(status="underchange")
         else:
@@ -102,7 +101,7 @@ class Report:
         sheet.column_dimensions["D"].width = 10
 
         self.get_bytes_stream()
-        self.workbook.save('new_example.xlsx')
+        # self.workbook.save('new_example.xlsx')
 
 
     def get_bytes_stream(self):
