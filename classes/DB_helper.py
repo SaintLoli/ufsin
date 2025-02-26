@@ -136,11 +136,27 @@ class DBHelper:
             "SELECT type FROM other group by type"
         ).fetchall()
 
-    def get_item_name_by_warehouse(self, whs_name):
+    def get_item_name_by_warehouse_ok_status(self, whs_name):
         return self.cur.execute(
             """
             SELECT type_item, id_item, arrival_time FROM item LEFT JOIN sklad ON id_stock == sklad.id
-            WHERE sklad.name == ?
+            WHERE sklad.name == ? and item.status == 'ok'
+            """, (whs_name, )
+        ).fetchall()
+
+    def get_item_name_by_warehouse_remove_status(self, whs_name):
+        return self.cur.execute(
+            """
+            SELECT type_item, id_item, arrival_time FROM item LEFT JOIN sklad ON id_stock == sklad.id
+            WHERE sklad.name == ? and item.status == 'removed'
+            """, (whs_name, )
+        ).fetchall()
+
+    def get_item_name_by_warehouse_underchange_status(self, whs_name):
+        return self.cur.execute(
+            """
+            SELECT type_item, id_item, arrival_time FROM item LEFT JOIN sklad ON id_stock == sklad.id
+            WHERE sklad.name == ? and item.status == 'underchange'
             """, (whs_name, )
         ).fetchall()
 

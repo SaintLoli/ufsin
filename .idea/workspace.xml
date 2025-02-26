@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9329271d-1717-455f-acd5-d3bc62249f16" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/Report.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Report.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layout/otchet.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/otchet.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/items_on_warehouses.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/templates/items_on_warehouses_ok_status.xlsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +39,7 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/js" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
@@ -51,7 +54,7 @@
       <recent name="C:\Users\borod\PycharmProjects\ufsin\classes" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Report">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Models" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ufsin" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -180,8 +183,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Report" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.Report" />
         <item itemvalue="Python.test" />
         <item itemvalue="Python.PCInfo" />
         <item itemvalue="Python.Models" />
@@ -421,7 +424,14 @@
       <option name="project" value="LOCAL" />
       <updated>1740486859771</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="poshlo vse v 4opy">
+      <created>1740565928991</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1740565928991</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, send_file
 from classes.PCInfo import *
 from classes.Filler import *
 from classes.Report import Report
@@ -125,7 +125,16 @@ def otchet():
             return render_template("otchet_ready.html", wrhs_items=ITEMSONSKLAD, name=request.form["report_name"])
 
         elif request.form.get("format") == "excel":
-            Report(request.form.get("report_type"), database=database, template_path="templates/")
+            report = Report(request.form.get("report_type"), database=database, template_path="templates/")
+            file_stream = report.get_bytes_stream()
+
+            # Отправляем файл клиенту
+            return send_file(
+                file_stream,
+                mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                as_attachment=True,
+                download_name='{}.xlsx'.format(request.form.get("report_name").replace("/", "_").replace("\\", "_"))
+            )
 
     return render_template("otchet.html")
 
@@ -139,8 +148,6 @@ def departments(name):
             fill_departments(name)
             return render_template("departments.html",
                                 departments=DEPARTMENTS)
-
-
 
 
 @app.route("/admin_home/<office>/staff", methods=['GET', 'POST'])
