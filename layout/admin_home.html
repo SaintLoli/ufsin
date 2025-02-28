@@ -152,9 +152,9 @@
 
         {% if USER_ROLE != 3 %}
             <div class="action-buttons">
-                <button type="button" class="btn btn-primary">Добавить</button>
-                <button type="button" class="btn btn-warning">Изменить</button>
-                <button type="button" class="btn btn-danger">Удалить</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeviceModal">Добавить</button>
+                <button type="button" class="btn btn-warning" disabled>Изменить</button>
+                <button type="button" class="btn btn-danger" disabled>Удалить</button>
             </div>
         {% endif %}
     </main>
@@ -201,6 +201,55 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для добавления устройства -->
+    <div class="modal fade" id="addDeviceModal" tabindex="-1" aria-labelledby="addDeviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDeviceModalLabel">Добавить устройство</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDeviceForm" method="post" action="#">
+                        <div class="mb-3">
+                            <label for="addDeviceName" class="form-label">Наименование</label>
+                            <input type="text" class="form-control" id="addDeviceName" name="deviceName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addDeviceType" class="form-label">Тип устройства</label>
+                            <select class="form-select" id="addDeviceType" name="deviceType" required>
+                                <option value="" selected disabled>Выберите тип</option>
+                                <option value="board">Клавиатура</option>
+                                <option value="monitor">Монитор</option>
+                                <option value="mouse">Компьютерная мышь</option>
+                                <option value="printer">Принтер</option>
+                                <option value="tel">Стационарный телефон</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="customTypeContainer" style="display: none;">
+                        <label for="addCustomDeviceType" class="form-label">Укажите тип устройства</label>
+                        <input type="text" class="form-control" id="addCustomDeviceType" name="customType">
+                        </div>
+                        <div class="mb-3">
+                            <label for="addDeviceSNumber" class="form-label">Серийный номер</label>
+                            <input type="text" class="form-control" id="addDeviceSNumber" name="deviceSNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="addDeviceYear" class="form-label">Год выпуска</label>
+                            <input type="number" class="form-control" id="addDeviceYear" min="2000" max="2025" name="deviceYear" required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary" >Сохранить</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -281,6 +330,22 @@
                 document.getElementById('modalSystemBlockSNumber').textContent = deviceSNumber;
                 document.getElementById('modalSystemBlockYear').textContent = deviceYear;
                 document.getElementById('modalSystemBlockStatus').textContent = deviceStatus;
+            });
+
+            // Обработчик для кнопки сохранения нового устройства
+            const deviceTypeSelect = document.getElementById('addDeviceType');
+            const customTypeContainer = document.getElementById('customTypeContainer');
+            const customTypeInput = document.getElementById('addCustomDeviceType');
+
+            deviceTypeSelect.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    customTypeContainer.style.display = 'block';
+                    customTypeInput.required = true;
+                } else {
+                    customTypeContainer.style.display = 'none';
+                    customTypeInput.required = false;
+                    customTypeInput.value = '';
+                }
             });
         });
     </script>

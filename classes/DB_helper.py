@@ -8,8 +8,6 @@ class DBHelper:
         self.con = sqlite3.connect(filepath, check_same_thread=False)
         self.cur = self.con.cursor()
 
-
-
     def check_user(self, login, password):
         if self.cur.execute(f"SELECT * FROM user WHERE login=? and password=?",
                             (login, hashlib.md5(password.encode()).hexdigest())).fetchone():
@@ -19,6 +17,17 @@ class DBHelper:
 
     def add_pc_name(self, pc_name):
         self.cur.execute(f"INSERT INTO user (pc_name) VALUES (?)", (pc_name, ))
+        self.con.commit()
+
+    def add_device(self, device_type, id_user, name, s_number='', year='', custom_type=""):
+        if custom_type == "":
+            self.cur.execute(
+                f"INSERT INTO {device_type} (id_user, name) VALUES (?, ?)", (id_user, name)
+            )
+        else:
+            self.cur.execute(
+                f"INSERT INTO {device_type} (id_user, type, name) VALUES (?, ?, ?)", (id_user, custom_type, name)
+            )
         self.con.commit()
 
     def get_user_id(self, login):
@@ -51,7 +60,7 @@ class DBHelper:
             return None
 
     def get_item(self, item, user_id):
-        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchone()
+        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchall()
 
     def get_item_type_by_id(self, id):
         return self.cur.execute(f"SELECT type FROM other WHERE id=?", (id,)).fetchone()
@@ -172,11 +181,11 @@ class DBHelper:
         ).fetchone()[0]
 
     def get_organizations(self, role, organization):
-        if (role==1):
+        if role == 1:
             return self.cur.execute(
                 f"SELECT name, address, priority FROM organization "
             ).fetchall()
-        elif (role == 2):
+        elif role == 2:
             return self.cur.execute(
                 f"SELECT name, address, priority FROM organization WHERE name = ?",
                 (organization, )
@@ -200,6 +209,7 @@ class DBHelper:
 
     def EXCEL_REPORT_ITEMS_ON_WAREHOUSE(self):
         ...
+
     def get_user_organization_by_id(self, id):
         return self.cur.execute(
             f"SELECT organization FROM user WHERE id = ?", (id,)

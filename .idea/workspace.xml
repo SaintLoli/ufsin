@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/Filler.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Filler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layout/admin_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/admin_home.html" afterDir="false" />
     </list>
@@ -444,7 +445,14 @@
       <option name="project" value="LOCAL" />
       <updated>1740568773469</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="отчеты сделал">
+      <created>1740733240103</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1740733240104</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -482,16 +490,5 @@
     <MESSAGE value="poshlo vse v 4opy" />
     <MESSAGE value="отчеты сделал" />
     <option name="LAST_COMMIT_MESSAGE" value="отчеты сделал" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/classes/DB_helper.py</url>
-          <line>160</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

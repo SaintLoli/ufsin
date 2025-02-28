@@ -31,8 +31,8 @@ def fill_devices(USER_ID):
     id += 1
 
     for table_name in TABLES.keys():
-        device = database.get_item(table_name, int(USER_ID))
-        if device:
+        devices = database.get_item(table_name, int(USER_ID))
+        for device in devices:
             DEVICES.append(Device(device[0], TABLES[table_name], "В эксплуатации", user_fio=fio))
             DEVICES[-1].id = id
             id += 1
