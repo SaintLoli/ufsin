@@ -147,7 +147,6 @@ def departments(name):
 
 @app.route("/admin_home/<office>/staff", methods=['GET', 'POST'])
 def department_staff(office):
-
     if not (USER_ROLE <= 2 and (database.get_department_organization_by_department_name(office) == USER_ORGANIZATION or USER_ORGANIZATION == 'main')):
         return "Доступ запрещен", 403
 
@@ -156,62 +155,56 @@ def department_staff(office):
 
     if request.method == "POST":
 
-        if request.form:
+        if 'employeeName' in request.form and 'addEmployeeForm'  in request.form:
             name = request.form.get('employeeName')
             access_level = request.form.get('accessLevel')
             organization = request.form.get('organization')
             department = request.form.get('department')
             pc_name = request.form.get('pcName')
 
-            # Проверка, что все поля заполнены
             if name and access_level and organization and department and pc_name:
-
                 database.add_person(
                     name,
                     access_level,
                     organization,
                     department,
                     pc_name,
-                    # job_title="Не указано",
-                    # tel="Не указано",
-                    # tubel=f"TB-{name[:3].upper()}-{office[:3].upper()}",
-                    # status="Активен"
                 )
-                # Обновляем список сотрудников после добавления
                 fill_department_staff(organization, office)
-                return redirect(url_for('department_staff', office=office))  # Перезагружаем страницу
+                return redirect(url_for('department_staff', office=office))
+
+        #
+        elif 'employeeId' in request.form:
+
+
+            name = request.form.get('employeeId')
+
+            employee_id = database.get_user_id_by_name(name)
+
+            access_level = request.form.get('accessLevel')
+            organization = request.form.get('organization')
+            department = request.form.get('department')
+            pc_name = request.form.get('pcName')
+            print(name, employee_id, access_level, organization, department, pc_name)
+            if employee_id and name and access_level and organization and department and pc_name:
+
+                database.change_person(name, access_level, organization, department, pc_name, employee_id)
+
+                fill_department_staff(organization, office)
+                return redirect(url_for('department_staff', office=office))
+
+
+        elif 'deleteId' in request.form:
+            employee_id = request.form.get('deleteId')
+            print(employee_id)
+            if employee_id:
+                print(employee_id)
+                database.cur.execute("DELETE FROM user WHERE fio =? ", (employee_id,))
+                database.con.commit()
+                fill_department_staff(organization, office)
+                return '', 200  # Успешный ответ для AJAX
 
     return render_template("staff.html", users=STAFF, department_name=office)
-    # if request.form:
-    #     USER_DEVICES['cpu'] = request.form.get('cpu')
-    #     USER_DEVICES['motherboard'] = request.form.get('motherboard')
-    #     USER_DEVICES['gpu'] = request.form.get('gpu')
-    #     USER_DEVICES['ram'] = request.form.get('ram')
-    #     USER_DEVICES['year'] = request.form.get('year')
-    #     USER_DEVICES['s_number'] = request.form.get('s_number')
-    #
-    #     i = 1
-    #     while True:
-    #         device_type = request.form.get(f'device_type_{i}')
-    #         device_name = request.form.get(f'device_name_{i}')
-    #         device_s_number = request.form.get(f'device_s_number_{i}')
-    #         device_year = request.form.get(f'device_year_{i}')
-    #
-    #         if not device_type:
-    #             break
-    #
-    #         else:
-    #             USER_DEVICES['devices'].append(DEVICE_TEMPLATE.copy())
-    #             USER_DEVICES['devices'][-1]['type'] = device_type
-    #             USER_DEVICES['devices'][-1]['name'] = device_name
-    #             USER_DEVICES['devices'][-1]['s_number'] = device_s_number
-    #             USER_DEVICES['devices'][-1]['year'] = device_year
-    #
-    #         i += 1
-    #
-    #     return jsonify({'status': 'success', 'message': 'Data received successfully'})
-
-
 
 @app.route("/admin_home/staff/<name>")
 def user_devices(name):
