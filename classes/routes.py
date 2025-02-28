@@ -89,18 +89,13 @@ def add_devices():
 @app.route("/admin_home",methods=['GET', 'POST'])
 def admin_panel():
     fill_devices(USER_ID)
-    if(USER_ROLE==1):
-
+    if USER_ROLE == 1 or USER_ROLE == 2:
         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
-
         return render_template("organization.html", organization=ORGANIZATIONS)
-    if (USER_ROLE == 2):
-        fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
-        return render_template("organization.html"
-                               , organization=ORGANIZATIONS)
+
     else:
         return render_template("admin_home.html",
-            devices=DEVICES)
+            devices=DEVICES, USER_ROLE=USER_ROLE)
 
 
 @app.route("/admin_home")
@@ -142,8 +137,8 @@ def otchet():
 
 @app.route("/admin_home/<name>/departments")
 def departments(name):
-    if (USER_ROLE <= 2):
-        if(USER_ORGANIZATION == name or USER_ORGANIZATION == 'main'):
+    if USER_ROLE <= 2:
+        if USER_ORGANIZATION == name or USER_ORGANIZATION == 'main':
             name = name
             fill_departments(name)
             return render_template("departments.html",
@@ -156,58 +151,44 @@ def department_staff(office):
         return "Доступ запрещен", 403
 
     organization = database.get_organization_name(USER_ID)
-    fill_department_staff(organization, office)
+    fill_department_staff(organization, office)  # Предполагается, что это заполняет STAFF
 
     if request.method == "POST":
-
+        print(request.form)
         if 'employeeName' in request.form and 'employeeId' not in request.form:
             name = request.form.get('employeeName')
             access_level = request.form.get('accessLevel')
             organization = request.form.get('organization')
             department = request.form.get('department')
+            pc_name = request.form.get('pcName')
 
-
-            if name and access_level and organization and department :
+            if name and access_level and organization and department and pc_name:
                 database.add_person(
                     name,
                     access_level,
                     organization,
-                    department
-
+                    department,
+                    pc_name,
                 )
                 fill_department_staff(organization, office)
-
-
                 return redirect(url_for('department_staff', office=office))
 
         #
         elif 'employeeId' in request.form:
-            print(request.form)
-            id_person = request.form.get('employeeId')
-
-            person_name = ""
 
 
-            for user in STAFF:
-                if str(user.id) == id_person:
-                    print(user.name)
-                    person_name = user.name
+            name = request.form.get('employeeId')
 
-            employee_id = database.get_user_id_by_name(person_name)
-            name = person_name
-            employeeName = request.form.get('employeeName')
+            employee_id = database.get_user_id_by_name(name)
+
             access_level = request.form.get('accessLevel')
             organization = request.form.get('organization')
             department = request.form.get('department')
+            pc_name = request.form.get('pcName')
+            print(name, employee_id, access_level, organization, department, pc_name)
+            if employee_id and name and access_level and organization and department and pc_name:
 
-
-            print(employeeName, employee_id, access_level, organization, department)
-
-            department = database.get_office_by_name_of_ofiice(department)
-
-            if employee_id and name and access_level and organization and department :
-
-                database.change_person(employeeName, access_level, organization, department, employee_id)
+                database.change_person(name, access_level, organization, department, pc_name, employee_id)
 
                 fill_department_staff(organization, office)
                 return redirect(url_for('department_staff', office=office))
@@ -215,30 +196,41 @@ def department_staff(office):
 
         elif 'deleteId' in request.form:
             employee_id = request.form.get('deleteId')
-
-
-            for user in STAFF:
-                if str(user.id) == employee_id:
-                    employee_id = user.name
-                    break
-
             print(employee_id)
             if employee_id:
-                database.cur.execute("DELETE FROM user WHERE fio =? ", ( employee_id,))
+                print(employee_id)
+                database.cur.execute("DELETE FROM user WHERE fio =? ", (employee_id,))
                 database.con.commit()
                 fill_department_staff(organization, office)
-                return '', 200
+                return '', 200  # Успешный ответ для AJAX
 
     return render_template("staff.html", users=STAFF, department_name=office)
 
-@app.route("/admin_home/staff/<name>")
+
+@app.route("/admin_home/staff/<name>", methods=["GET", "POST"])
 def user_devices(name):
     name = name
     this_user_id = database.get_user_id_by_name(name)
-    if (USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main')):
+
+    if request.method == "POST":
+        deviceName = request.form.get("deviceName")
+        deviceType = request.form.get("deviceType")
+        deviceSNumber = request.form.get("deviceSNumber")
+        deviceYear = request.form.get("deviceYear")
+        print(request.form)
+
+        database.add_device(deviceType, database.get_user_id_by_name(name), deviceName)
+
+
+        return redirect(url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE))
+
+
+
+    if USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main'):
         fill_devices(this_user_id)
-        return render_template("admin_home.html",
-                        devices=DEVICES)
+
+    return render_template("admin_home.html",
+                    devices=DEVICES, USER_ROLE=USER_ROLE, name=name)
 
 
 # @app.route("/admin_home/departments")
