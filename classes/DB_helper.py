@@ -214,3 +214,8 @@ class DBHelper:
                          f" VALUES (?, ?, ?, ?, ?)",
                          (fio, pc_name, role, office, organization))
         self.con.commit()
+
+    def change_person(self, fio, role, organization, office, pc_name, id):
+        self.cur.execute("UPDATE user SET fio=?, pc_name=?, role=?, office=?, organization=? WHERE id=?",
+                         (fio, pc_name, role, office, organization, id))
+        self.con.commit()
