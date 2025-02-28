@@ -89,18 +89,13 @@ def add_devices():
 @app.route("/admin_home",methods=['GET', 'POST'])
 def admin_panel():
     fill_devices(USER_ID)
-    if(USER_ROLE==1):
-
+    if USER_ROLE == 1 or USER_ROLE == 2:
         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
-
         return render_template("organization.html", organization=ORGANIZATIONS)
-    if (USER_ROLE == 2):
-        fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
-        return render_template("organization.html"
-                               , organization=ORGANIZATIONS)
+
     else:
         return render_template("admin_home.html",
-            devices=DEVICES)
+            devices=DEVICES, USER_ROLE=USER_ROLE)
 
 
 @app.route("/admin_home")
@@ -142,8 +137,8 @@ def otchet():
 
 @app.route("/admin_home/<name>/departments")
 def departments(name):
-    if (USER_ROLE <= 2):
-        if(USER_ORGANIZATION == name or USER_ORGANIZATION == 'main'):
+    if USER_ROLE <= 2:
+        if USER_ORGANIZATION == name or USER_ORGANIZATION == 'main':
             name = name
             fill_departments(name)
             return render_template("departments.html",
@@ -225,7 +220,7 @@ def user_devices(name):
     if (USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main')):
         fill_devices(this_user_id)
         return render_template("admin_home.html",
-                        devices=DEVICES)
+                        devices=DEVICES, USER_ROLE=USER_ROLE)
 
 
 # @app.route("/admin_home/departments")

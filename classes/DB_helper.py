@@ -172,7 +172,7 @@ class DBHelper:
         ).fetchone()[0]
 
     def get_organizations(self, role, organization):
-        if(role==1):
+        if (role==1):
             return self.cur.execute(
                 f"SELECT name, address, priority FROM organization "
             ).fetchall()
