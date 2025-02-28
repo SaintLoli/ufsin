@@ -51,7 +51,7 @@ class DBHelper:
             return None
 
     def get_item(self, item, user_id):
-        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchone()
+        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchall()
 
     def get_item_type_by_id(self, id):
         return self.cur.execute(f"SELECT type FROM other WHERE id=?", (id,)).fetchone()
@@ -224,3 +224,16 @@ class DBHelper:
         return self.cur.execute(
             f"SELECT id FROM offices WHERE name = ?", (name,)
         ).fetchone()[0]
+
+    def add_device(self, device_type, id_user, name, s_number='', year='', custom_type=""):
+
+        if custom_type == "":
+
+            self.cur.execute(
+                f"INSERT INTO {device_type} (id_user, name) VALUES (?, ?)", (id_user, name)
+            )
+        else:
+            self.cur.execute(
+                f"INSERT INTO {device_type} (id_user, type, name) VALUES (?, ?, ?)", (id_user, custom_type, name)
+            )
+        self.con.commit()

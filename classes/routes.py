@@ -231,14 +231,30 @@ def department_staff(office):
 
     return render_template("staff.html", users=STAFF, department_name=office)
 
-@app.route("/admin_home/staff/<name>")
+@app.route("/admin_home/staff/<name>", methods=['GET', 'POST'])
 def user_devices(name):
     name = name
     this_user_id = database.get_user_id_by_name(name)
-    if (USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main')):
+
+    if request.method == "POST":
+        deviceName = request.form.get("deviceName")
+        deviceType = request.form.get("deviceType")
+        deviceSNumber = request.form.get("deviceSNumber")
+        deviceYear = request.form.get("deviceYear")
+        print(request.form)
+
+        database.add_device(deviceType, database.get_user_id_by_name(name), deviceName)
+
+
+        return redirect(url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE))
+
+
+
+    if USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main'):
         fill_devices(this_user_id)
-        return render_template("admin_home.html",
-                        devices=DEVICES)
+
+    return render_template("admin_home.html",
+                    devices=DEVICES, USER_ROLE=USER_ROLE, name=name)
 
 
 # @app.route("/admin_home/departments")
