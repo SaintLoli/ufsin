@@ -16,7 +16,6 @@ ITEMSONSKLAD = []
 ORGANIZATIONS = []
 STAFF = []
 
-
 def fill_devices(USER_ID):
     global DEVICES
     DEVICES.clear()
