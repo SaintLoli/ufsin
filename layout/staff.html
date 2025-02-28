@@ -70,6 +70,7 @@
                         <td>{{user.job_title}}</td>
                         <td>{{user.office}}</td>
                         <td>{{user.tel}}</td>
+
                         <td><span class="badge bg-success">{{user.status}}</span></td>
                     </tr>
                     {% endfor %}
@@ -113,10 +114,7 @@
                             <label for="department" class="form-label">Отдел</label>
                             <input type="text" class="form-control" id="department" name="department" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="pcName" class="form-label">Имя ПК</label>
-                            <input type="text" class="form-control" id="pcName" name="pcName" required>
-                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -137,7 +135,9 @@
                 </div>
                 <div class="modal-body">
                     <form id="editEmployeeForm" method="post" action="{{ url_for('department_staff', office=department_name) }}">
+
                         <input type="hidden" id="editEmployeeId" name="employeeId">
+
                         <div class="mb-3">
                             <label for="editEmployeeName" class="form-label">ФИО</label>
                             <input type="text" class="form-control" id="editEmployeeName" name="employeeName" required>
@@ -158,10 +158,7 @@
                             <label for="editDepartment" class="form-label">Отдел</label>
                             <input type="text" class="form-control" id="editDepartment" name="department" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="editPcName" class="form-label">Имя ПК</label>
-                            <input type="text" class="form-control" id="editPcName" name="pcName" required>
-                        </div>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="submit" class="btn btn-primary">Сохранить изменения</button>
@@ -211,12 +208,13 @@
                 const name = selectedRow.cells[1].textContent.trim().split('\n')[0];
                 const jobTitle = selectedRow.cells[2].textContent;
                 const department = selectedRow.cells[3].textContent;
-                const pcName = selectedRow.cells[4].textContent;
+
+
 
                 document.getElementById('editEmployeeId').value = id;
                 document.getElementById('editEmployeeName').value = name;
                 document.getElementById('editDepartment').value = department;
-                document.getElementById('editPcName').value = pcName;
+
                 // Здесь можно добавить AJAX для получения остальных данных из БД, если нужно
                 const modal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
                 modal.show();
