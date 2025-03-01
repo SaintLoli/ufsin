@@ -237,13 +237,39 @@ def user_devices(name):
     this_user_id = database.get_user_id_by_name(name)
 
     if request.method == "POST":
+        print(request.form)
+        deviceId = request.form.get("deviceId")
         deviceName = request.form.get("deviceName")
         deviceType = request.form.get("deviceType")
+        deviceCustomType = request.form.get("customType")
         deviceSNumber = request.form.get("deviceSNumber")
         deviceYear = request.form.get("deviceYear")
-        print(request.form)
 
-        database.add_device(deviceType, database.get_user_id_by_name(name), deviceName)
+        deleteId = request.form.get("deleteId")
+
+        if not deviceId and not deleteId:
+            database.add_device(deviceType, database.get_user_id_by_name(name), deviceName, custom_type=deviceCustomType)
+
+        if deviceId:
+            for device in DEVICES:
+                print(device.id, " device ", deviceId)
+                print(device.type, " deviceType ", deviceType)
+                if str(device.id) == str(deviceId) and device.type == TABLES[deviceType]:
+                    database.edit_device(deviceType, deviceName, device.global_id)
+                elif str(device.id) == str(deviceId) and device.type != TABLES[deviceType]:
+                    database.add_device(deviceType, database.get_user_id_by_name(name), deviceName,
+                                        custom_type=deviceCustomType)
+
+        if deleteId:
+            for device in DEVICES:
+                print(device.id, " device ", deleteId, device.global_id)
+                print(device.type, " deviceType ", TABLES[request.form.get("deleteType")])
+                if str(device.id) == str(deleteId) and device.type == TABLES[request.form.get("deleteType")]:
+                    database.delete_device(request.form.get("deleteType"), device.global_id)
+
+                    return '', 200
+
+
 
 
         return redirect(url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE))

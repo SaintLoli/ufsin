@@ -51,15 +51,23 @@ class DBHelper:
             return None
 
     def get_item(self, item, user_id):
-        return self.cur.execute(f"SELECT name FROM {item} WHERE id_user=?", (user_id, )).fetchall()
+        if item != "other":
+            return self.cur.execute(f"SELECT name, id FROM {item} WHERE id_user=?", (user_id, )).fetchall()
+        else:
+            return self.cur.execute(f"SELECT name, type, id FROM {item} WHERE id_user=?", (user_id, )).fetchall()
 
     def get_item_type_by_id(self, id):
         return self.cur.execute(f"SELECT type FROM other WHERE id=?", (id,)).fetchone()
 
-    def add_item(self, item_type, name, user_id):
-        self.cur.execute(
-            f"INSERT INTO {item_type} (id_user, name) VALUES (?, ?)", (user_id, name)
-        )
+    def add_item(self, item_type, name, user_id, custom_type=""):
+        if item_type != "other":
+            self.cur.execute(
+                f"INSERT INTO {item_type} (id_user, name) VALUES (?, ?)", (user_id, name)
+            )
+        else:
+            self.cur.execute(
+                f"INSERT INTO {item_type} (id_user, type, name) VALUES (?, ?, ?)", (user_id, custom_type, name)
+            )
         self.con.commit()
 
     def get_users(self):
@@ -216,7 +224,7 @@ class DBHelper:
         self.con.commit()
 
     def change_person(self, fio, role, organization, office,  id):
-        self.cur.execute("UPDATE user SET fio=?,  role=?, office=?, organization=? WHERE id=?",
+        self.cur.execute("UPDATE user SET fio=?, role=?, office=?, organization=? WHERE id=?",
                          (fio,  role, office, organization, id))
         self.con.commit()
 
@@ -226,9 +234,7 @@ class DBHelper:
         ).fetchone()[0]
 
     def add_device(self, device_type, id_user, name, s_number='', year='', custom_type=""):
-
         if custom_type == "":
-
             self.cur.execute(
                 f"INSERT INTO {device_type} (id_user, name) VALUES (?, ?)", (id_user, name)
             )
@@ -236,4 +242,19 @@ class DBHelper:
             self.cur.execute(
                 f"INSERT INTO {device_type} (id_user, type, name) VALUES (?, ?, ?)", (id_user, custom_type, name)
             )
+        self.con.commit()
+
+    def edit_device(self, device_type, name, globalId, s_number='', year='', custom_type=""):
+        print(globalId, "<---")
+        if custom_type == "":
+            self.cur.execute(
+                f"UPDATE {device_type} SET name=? WHERE id=?", (name, globalId)
+            )
+
+        self.con.commit()
+
+    def delete_device(self, device_type, global_id):
+        self.cur.execute(
+            f"DELETE FROM {device_type} WHERE id=?", (global_id, )
+        )
         self.con.commit()
