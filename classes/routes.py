@@ -85,23 +85,49 @@ def add_devices():
     return redirect(url_for("admin_panel"))
 
 
-
-@app.route("/admin_home",methods=['GET', 'POST'])
+#
+# @app.route("/admin_home",methods=['GET', 'POST'])
+# def admin_panel():
+#     fill_devices(USER_ID)
+#     if(USER_ROLE==1):
+#
+#         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
+#
+#         return render_template("organization.html", organization=ORGANIZATIONS)
+#     if (USER_ROLE == 2):
+#         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
+#         return render_template("organization.html"
+#                                , organization=ORGANIZATIONS)
+#     else:
+#         return render_template("admin_home.html",
+#             devices=DEVICES)
+@app.route("/admin_home", methods=['GET', 'POST'])
 def admin_panel():
     fill_devices(USER_ID)
-    if(USER_ROLE==1):
+    if request.method == 'POST':
+        if 'deleteId' in request.form:
 
+            print(request.form['deleteId'])
+            database.delete_organization(database.get_organization_id_by_name(request.form['deleteId']))
+            return '', 204
+        else:
+
+            name = request.form['name']
+            address = request.form['address']
+            priority = request.form['priority']
+
+            if 'id' in request.form and request.form['id']:
+                org_id = database.get_organization_id_by_name(request.form['name'])
+                database.update_organization(org_id, name, address, priority)
+            else:
+                database.add_organization(name, address, priority)
+            return redirect(url_for('admin_panel'))
+
+    if USER_ROLE == 1 or USER_ROLE == 2:
         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
-
         return render_template("organization.html", organization=ORGANIZATIONS)
-    if (USER_ROLE == 2):
-        fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
-        return render_template("organization.html"
-                               , organization=ORGANIZATIONS)
     else:
-        return render_template("admin_home.html",
-            devices=DEVICES)
-
+        return render_template("admin_home.html", devices=DEVICES)
 
 @app.route("/admin_home")
 def staff():
@@ -140,14 +166,50 @@ def otchet():
 
 
 
-@app.route("/admin_home/<name>/departments")
+# @app.route("/admin_home/<name>/departments")
+# def departments(name):
+#     if (USER_ROLE <= 2):
+#         if(USER_ORGANIZATION == name or USER_ORGANIZATION == 'main'):
+#             name = name
+#             fill_departments(name)
+#             return render_template("departments.html",
+#                                 departments=DEPARTMENTS)
+
+
+@app.route("/admin_home/<name>/departments", methods=['GET', 'POST'])
 def departments(name):
-    if (USER_ROLE <= 2):
-        if(USER_ORGANIZATION == name or USER_ORGANIZATION == 'main'):
-            name = name
+    if int(USER_ROLE) <= 2:
+        if USER_ORGANIZATION == name or USER_ORGANIZATION == 'main':  # Проверка организации
+            if request.method == 'POST':
+                if 'deleteId' in request.form:
+
+                    delete_name = request.form['deleteId']
+                    print(delete_name)
+                    delete_id = database.get_office_id_by_name(delete_name)
+                    database.delete_department(delete_id)
+                    return '', 204
+                else:
+
+                    key = request.form['key']
+                    dep_name = request.form['name']
+                    supervisor = request.form['supervisor']
+                    address = request.form['address']
+                    phone = request.form['phone']
+
+                    if 'id' in request.form and request.form['id']:
+                        dep_id = database.get_office_id_by_name(request.form['name'])
+                        database.update_department(dep_id, key, dep_name, supervisor, address, phone)
+                    else:
+                        database.add_department(key, dep_name, supervisor, address, phone, name)
+                    return redirect(url_for('departments', name=name))
+
             fill_departments(name)
-            return render_template("departments.html",
-                                departments=DEPARTMENTS)
+            return render_template("departments.html", departments=DEPARTMENTS, name=name)
+    return "Доступ запрещен", 403
+
+
+
+
 
 
 @app.route("/admin_home/<office>/staff", methods=['GET', 'POST'])
@@ -197,8 +259,8 @@ def department_staff(office):
             name = person_name
             employeeName = request.form.get('employeeName')
             access_level = request.form.get('accessLevel')
-            organization = request.form.get('organization')
-            department = request.form.get('department')
+            organization =      request.form.get('organization')
+            department =        request.form.get('department')
 
 
             print(employeeName, employee_id, access_level, organization, department)

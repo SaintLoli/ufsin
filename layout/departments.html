@@ -58,7 +58,7 @@
                         <a class="nav-link" href="/admin_home">Главная</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin_home/departments">Подразделения</a>
+                        <a class="nav-link active" href="/admin_home/{{name}}/departments">Подразделения</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/admin_home/sklad">Склад</a>
@@ -73,7 +73,7 @@
 
     <main class="container department-table">
         <div class="table-responsive">
-            <table class="table table-hover align-middle">
+            <table class="table table-hover align-middle" id="departmentTable">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -86,7 +86,7 @@
                 </thead>
                 <tbody>
                     {% for dep in departments %}
-                    <tr>
+                    <tr data-id="{{dep.id}}" onclick="selectRow(this)">
                         <td>{{dep.id}}</td>
                         <td>
                             <a href="/admin_home/{{dep.name}}/staff" target="_self" class="text-decoration-none">
@@ -104,15 +104,150 @@
             </table>
         </div>
 
-
         <div class="action-buttons">
-            <button type="button" class="btn btn-primary">Добавить</button>
-            <button type="button" class="btn btn-warning">Изменить</button>
-            <button type="button" class="btn btn-danger">Удалить</button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">Добавить</button>
+            <button type="button" class="btn btn-warning" onclick="openEditModal()" id="editButton" disabled>Изменить</button>
+            <button type="button" class="btn btn-danger" onclick="deleteDepartment()" id="deleteButton" disabled>Удалить</button>
         </div>
     </main>
 
-    <!-- Bootstrap JS -->
+    <!-- Модальное окно для добавления -->
+    <div class="modal fade" id="addDepartmentModal" tabindex="-1" aria-labelledby="addDepartmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addDepartmentModalLabel">Добавить подразделение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addDepartmentForm" method="post" action="{{ url_for('departments', name=name) }}">
+                        <div class="mb-3">
+                            <label for="departmentName" class="form-label">Название отдела</label>
+                            <input type="text" class="form-control" id="departmentName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="supervisor" class="form-label">Руководитель (ID пользователя)</label>
+                            <input type="text" class="form-control" id="supervisor" name="supervisor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Адрес</label>
+                            <input type="text" class="form-control" id="address" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Телефон</label>
+                            <input type="text" class="form-control" id="phone" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="key" class="form-label">Код отдела</label>
+                            <input type="text" class="form-control" id="key" name="key" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для редактирования -->
+    <div class="modal fade" id="editDepartmentModal" tabindex="-1" aria-labelledby="editDepartmentModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDepartmentModalLabel">Редактировать подразделение</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDepartmentForm" method="post" action="{{ url_for('departments', name=name) }}">
+                        <input type="hidden" id="editDepartmentId" name="id">
+                        <div class="mb-3">
+                            <label for="editDepartmentName" class="form-label">Название отдела</label>
+                            <input type="text" class="form-control" id="editDepartmentName" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editSupervisor" class="form-label">Руководитель (ID пользователя)</label>
+                            <input type="text" class="form-control" id="editSupervisor" name="supervisor" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editAddress" class="form-label">Адрес</label>
+                            <input type="text" class="form-control" id="editAddress" name="address" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editPhone" class="form-label">Телефон</label>
+                            <input type="text" class="form-control" id="editPhone" name="phone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editKey" class="form-label">Код отдела</label>
+                            <input type="text" class="form-control" id="editKey" name="key" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS и пользовательский скрипт -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let selectedRow = null;
+
+            window.selectRow = function(row) {
+                if (selectedRow) selectedRow.classList.remove('table-active');
+                selectedRow = row;
+                selectedRow.classList.add('table-active');
+                document.getElementById('editButton').disabled = false;
+                document.getElementById('deleteButton').disabled = false;
+            };
+
+            window.openEditModal = function() {
+                if (!selectedRow) return;
+                const id = selectedRow.getAttribute('data-id');
+                const name = selectedRow.cells[1].textContent.trim().split('\n')[0];
+                const supervisor = selectedRow.cells[2].textContent;
+                const address = selectedRow.cells[3].textContent;
+                const phone = selectedRow.cells[4].textContent;
+                const key = selectedRow.cells[1].querySelector('small').textContent.replace('Код отдела: ', '');
+
+                document.getElementById('editDepartmentId').value = id;
+                document.getElementById('editDepartmentName').value = name;
+                document.getElementById('editSupervisor').value = supervisor;
+                document.getElementById('editAddress').value = address;
+                document.getElementById('editPhone').value = phone;
+                document.getElementById('editKey').value = key;
+
+                const modal = new bootstrap.Modal(document.getElementById('editDepartmentModal'));
+                modal.show();
+            };
+
+            window.deleteDepartment = function() {
+                if (!selectedRow) return;
+                const id = selectedRow.getAttribute('data-id');
+                const name = selectedRow.cells[1].textContent.trim().split('\n')[0];
+                if (confirm('Вы уверены, что хотите удалить подразделение ' + name + '?')) {
+                    fetch('/admin_home/{{name}}/departments', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'deleteId=' + encodeURIComponent(name)
+                    }).then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Ошибка при удалении подразделения');
+                        }
+                    }).catch(error => {
+                        console.error('Ошибка:', error);
+                        alert('Произошла ошибка');
+                    });
+                }
+            };
+        });
+    </script>
 </body>
 </html>

@@ -237,3 +237,51 @@ class DBHelper:
                 f"INSERT INTO {device_type} (id_user, type, name) VALUES (?, ?, ?)", (id_user, custom_type, name)
             )
         self.con.commit()
+
+    def add_department(self, key, name, supervisor, address, phone, organization):
+        self.cur.execute(
+                """
+                INSERT INTO offices (key, name, supervisor, address, phone, organization)
+                VALUES (?, ?, ?, ?, ?, ?);
+                """, (key, name, supervisor, address, phone, organization)
+            )
+        self.con.commit()
+        return self.cur.lastrowid
+
+    def update_department(self, dep_id, key, name, supervisor, address, phone):
+        self.cur.execute(
+            """
+            UPDATE offices SET key = ?, name = ?, supervisor = ?, address = ?, phone = ?
+               WHERE id = ?;
+               """, (key, name, supervisor, address, phone, dep_id)
+           )
+        self.con.commit()
+
+
+    def delete_department(self, dep_id):
+        self.cur.execute("DELETE FROM offices WHERE id = ?;", (dep_id,))
+        self.con.commit()
+
+    def add_organization(self, name, address, priority):
+        self.cur.execute(
+            "INSERT INTO organization (name, address, priority) VALUES (?, ?, ?)",
+            (name, address, priority)
+        )
+        self.con.commit()
+        return self.cur.lastrowid
+
+    def update_organization(self, org_id, name, address, priority):
+        self.cur.execute(
+            "UPDATE organization SET name = ?, address = ?, priority = ? WHERE id = ?",
+            (name, address, priority, org_id)
+        )
+        self.con.commit()
+
+    def delete_organization(self, org_id):
+        self.cur.execute("DELETE FROM organization WHERE id = ?", (org_id,))
+        self.con.commit()
+
+    def get_organization_id_by_name(self,name):
+        return self.cur.execute(
+            f"SELECT id FROM organization WHERE name = ?", (name,)
+        ).fetchone()[0]

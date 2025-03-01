@@ -221,9 +221,11 @@
             };
 
             window.deleteEmployee = function() {
+
                 if (!selectedRow) return;
                 const id = selectedRow.getAttribute('data-id');
-                if (confirm('Вы уверены, что хотите удалить сотрудника ' + id + '?')) {
+                const name = selectedRow.cells[1].textContent.trim().split('\n')[0];
+                if (confirm('Вы уверены, что хотите удалить сотрудника ' + name + '?')) {
                     fetch('/admin_home/{{ department_name }}/staff', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
