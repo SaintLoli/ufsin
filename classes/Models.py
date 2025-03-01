@@ -1,8 +1,10 @@
 class Device:
-    def __init__(self, name, type, status, year='', s_number='', user_fio='', name_pc='', cpu='', motherboard='', gpu='', ram=''):
+    def __init__(self, name, type, status, year='', s_number='', user_fio='', name_pc='', cpu='', motherboard='', gpu='', ram='', customType="", global_id=""):
         self.name = name
         self.type = type
+        self.customType = customType
         self.status = status
+        self.global_id = global_id
 
         self.year = year
         self.s_number = s_number

@@ -120,22 +120,24 @@
                 </thead>
                 <tbody>
                     {% for device in devices %}
-                    <tr data-bs-toggle="modal" data-bs-target="{% if device.type == 'Системный блок' %}#systemBlockModal{% else %}#deviceModal{% endif %}"
-                        data-device-id="{{device.id}}"
-                        data-device-name="{{device.name}}"
-                        data-device-type="{{device.type}}"
-                        data-device-snumber="{{device.s_number}}"
-                        data-device-year="{{device.year}}"
-                        data-device-status="{{device.status}}"
-                        data-device-fio="{{device.user_fio}}"
-                        data-device-pc_name="{{device.name_pc}}"
-                        data-device-motherboard="{{device.motherboard}}"
-                        data-device-gpu="{{device.gpu}}"
-                        data-device-cpu="{{device.cpu}}"
-                        data-device-ram="{{device.ram}}">
+                    <tr
+                        onclick="selectRow(this)"
+                        data-id="{{device.id}}">
                         <td>{{device.id}}</td>
                         <td>
-                            <a href="#" class="text-decoration-none">
+                            <a href="{% if device.type == 'Системный блок' %}#systemBlockModal{% else %}#deviceModal{% endif %}" class="text-decoration-none" data-bs-toggle="modal"
+                                data-device-id="{{device.id}}"
+                                data-device-name="{{device.name}}"
+                                data-device-type="{{device.type}}{% if device.customType != '' %} → {{device.customType}}{% endif %}"
+                                data-device-snumber="{{device.s_number}}"
+                                data-device-year="{{device.year}}"
+                                data-device-status="{{device.status}}"
+                                data-device-fio="{{device.user_fio}}"
+                                data-device-pc_name="{{device.name_pc}}"
+                                data-device-motherboard="{{device.motherboard}}"
+                                data-device-gpu="{{device.gpu}}"
+                                data-device-cpu="{{device.cpu}}"
+                                data-device-ram="{{device.ram}}">
                                 {{device.name|safe}} <br>
                                 <small class="text-muted">Серийный номер: {{device.s_number}}</small>
                             </a>
@@ -153,8 +155,8 @@
         {% if USER_ROLE != 3 %}
             <div class="action-buttons">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDeviceModal">Добавить</button>
-                <button type="button" class="btn btn-warning" disabled>Изменить</button>
-                <button type="button" class="btn btn-danger" disabled>Удалить</button>
+                <button type="button" class="btn btn-warning" disabled id="editButton" data-bs-toggle="modal" data-bs-target="#editDeviceModal">Изменить</button>
+                <button type="button" class="btn btn-danger" disabled onclick="deleteDevice()" id="deleteButton">Удалить</button>
             </div>
         {% endif %}
     </main>
@@ -255,6 +257,56 @@
         </div>
     </div>
 
+    <!-- Модальное окно для редактирования устройства -->
+    <div class="modal fade" id="editDeviceModal" tabindex="-1" aria-labelledby="editDeviceModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editDeviceModalLabel">Редактировать устройство</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editDeviceForm" method="post" action="#">
+                        <input type="hidden" id="editDeviceId" name="deviceId">
+                        <div class="mb-3">
+                            <label for="editDeviceName" class="form-label">Наименование</label>
+                            <input type="text" class="form-control" id="editDeviceName" name="deviceName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDeviceType" class="form-label">Тип устройства</label>
+                            <select class="form-select" id="editDeviceType" name="deviceType" required>
+                                <option value="" disabled>Выберите тип</option>
+                                <option value="board">Клавиатура</option>
+                                <option value="monitor">Монитор</option>
+                                <option value="mouse">Компьютерная мышь</option>
+                                <option value="printer">Принтер</option>
+                                <option value="tel">Стационарный телефон</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="editCustomTypeContainer" style="display: none;">
+                            <label for="editCustomDeviceType" class="form-label">Укажите тип устройства</label>
+                            <input type="text" class="form-control" id="editCustomDeviceType" name="customType">
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDeviceSNumber" class="form-label">Серийный номер</label>
+                            <input type="text" class="form-control" id="editDeviceSNumber" name="deviceSNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editDeviceYear" class="form-label">Год выпуска</label>
+                            <input type="number" class="form-control" id="editDeviceYear" min="2000" max="2025" name="deviceYear" required>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -283,6 +335,16 @@
                     row.style.display = matchesSearch && matchesType && matchesStatus ? '' : 'none';
                 });
             }
+
+            let selectedRow = null;
+
+            window.selectRow = function(row) {
+                if (selectedRow) selectedRow.classList.remove('table-active');
+                selectedRow = row;
+                selectedRow.classList.add('table-active');
+                document.getElementById('editButton').disabled = false;
+                document.getElementById('deleteButton').disabled = false;
+            };
 
             searchInput.addEventListener('input', filterTable);
             typeFilter.addEventListener('change', filterTable);
@@ -331,6 +393,83 @@
                 document.getElementById('modalSystemBlockYear').textContent = deviceYear;
                 document.getElementById('modalSystemBlockStatus').textContent = deviceStatus;
             });
+
+            const typeMapping = {
+                    'Клавиатура': 'board',
+                    'Монитор': 'monitor',
+                    'Компьютерная мышь': 'mouse',
+                    'Принтер': 'printer',
+                    'Стационарный телефон': 'tel'
+                };
+
+            var editDeviceModal = document.getElementById('editDeviceModal');
+            editDeviceModal.addEventListener('show.bs.modal', function (event) {
+                if (!selectedRow) return; // Если строка не выбрана, ничего не делаем
+
+                var deviceId = selectedRow.cells[0].textContent;
+                var deviceName = selectedRow.cells[1].getElementsByTagName('a')[0].getAttribute('data-device-name');
+                var deviceType = selectedRow.cells[1].getElementsByTagName('a')[0].getAttribute('data-device-type');
+                var deviceSNumber = selectedRow.cells[1].getElementsByTagName('a')[0].getAttribute('data-device-snumber');
+                var deviceYear = selectedRow.cells[1].getElementsByTagName('a')[0].getAttribute('data-device-year');
+
+                document.getElementById('editDeviceId').value = deviceId;
+                document.getElementById('editDeviceName').value = deviceName;
+                document.getElementById('editDeviceSNumber').value = deviceSNumber;
+                document.getElementById('editDeviceYear').value = deviceYear;
+
+                // Установка типа устройства
+                var editDeviceTypeSelect = document.getElementById('editDeviceType');
+                var customTypeContainer = document.getElementById('editCustomTypeContainer');
+                var customTypeInput = document.getElementById('editCustomDeviceType');
+
+                //console.log(deviceType)
+
+                if (typeMapping[deviceType]) {
+                    editDeviceTypeSelect.value = typeMapping[deviceType];
+                    customTypeContainer.style.display = 'none';
+                    customTypeInput.value = '';
+                } else {
+                    editDeviceTypeSelect.value = 'other';
+                    customTypeContainer.style.display = 'block';
+                    customTypeInput.value = deviceType.replace("Другое → ", "");
+                }
+            });
+            // Обработчик для поля "Тип устройства" в форме редактирования
+            const editDeviceTypeSelect = document.getElementById('editDeviceType');
+            const editCustomTypeContainer = document.getElementById('editCustomTypeContainer');
+            const editCustomTypeInput = document.getElementById('editCustomDeviceType');
+
+            editDeviceTypeSelect.addEventListener('change', function() {
+                if (this.value === 'other') {
+                    editCustomTypeContainer.style.display = 'block';
+                    editCustomTypeInput.required = true;
+                } else {
+                    editCustomTypeContainer.style.display = 'none';
+                    editCustomTypeInput.required = false;
+                    editCustomTypeInput.value = '';
+                }
+            });
+
+            window.deleteDevice = function() {
+                if (!selectedRow) return;
+                const id = selectedRow.getAttribute('data-id');
+                if (confirm('Вы уверены, что хотите удалить девайс ' + id + '?')) {
+                    fetch('/admin_home/staff/{{name}}', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: 'deleteId=' + encodeURIComponent(id) + '&deleteType=' + encodeURIComponent(typeMapping[selectedRow.cells[1].getElementsByTagName('a')[0].getAttribute('data-device-type')])
+                    }).then(response => {
+                        if (response.ok) {
+                            location.reload();
+                        } else {
+                            alert('Ошибка при удалении сотрудника');
+                        }
+                    }).catch(error => {
+                        console.error('Ошибка:', error);
+                        alert('Произошла ошибка');
+                    });
+                }
+            };
 
             // Обработчик для кнопки сохранения нового устройства
             const deviceTypeSelect = document.getElementById('addDeviceType');

@@ -31,10 +31,16 @@ def fill_devices(USER_ID):
 
     for table_name in TABLES.keys():
         devices = database.get_item(table_name, int(USER_ID))
+        print(devices)
         for device in devices:
-            DEVICES.append(Device(device[0], TABLES[table_name], "В эксплуатации", user_fio=fio))
+            if table_name != "other":
+                DEVICES.append(Device(device[0], TABLES[table_name], "В эксплуатации", user_fio=fio, global_id=device[1]))
+            else:
+                DEVICES.append(Device(device[0], TABLES[table_name], "В эксплуатации", user_fio=fio, customType=device[1], global_id=device[2]))
+
             DEVICES[-1].id = id
             id += 1
+
 
 
 def fill_users():
