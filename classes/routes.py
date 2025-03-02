@@ -308,6 +308,9 @@ def user_devices(name):
         deviceYear = request.form.get("deviceYear")
 
         deleteId = request.form.get("deleteId")
+        deleteType = request.form.get("deleteType")
+        if deleteType == "undefined":
+            deleteType = "other"
 
         if not deviceId and not deleteId:
             database.add_device(deviceType, database.get_user_id_by_name(name), deviceName, custom_type=deviceCustomType)
@@ -317,17 +320,18 @@ def user_devices(name):
                 print(device.id, " device ", deviceId)
                 print(device.type, " deviceType ", deviceType)
                 if str(device.id) == str(deviceId) and device.type == TABLES[deviceType]:
-                    database.edit_device(deviceType, deviceName, device.global_id)
+                    database.edit_device(deviceType, deviceName, device.global_id, custom_type=deviceCustomType)
                 elif str(device.id) == str(deviceId) and device.type != TABLES[deviceType]:
                     database.add_device(deviceType, database.get_user_id_by_name(name), deviceName,
                                         custom_type=deviceCustomType)
+                    database.delete_device(REVERSE_TABLES[device.type], device.global_id)
 
         if deleteId:
             for device in DEVICES:
                 print(device.id, " device ", deleteId, device.global_id)
-                print(device.type, " deviceType ", TABLES[request.form.get("deleteType")])
-                if str(device.id) == str(deleteId) and device.type == TABLES[request.form.get("deleteType")]:
-                    database.delete_device(request.form.get("deleteType"), device.global_id)
+                print(device.type, " deviceType ", TABLES[deleteType])
+                if str(device.id) == str(deleteId) and device.type == TABLES[deleteType]:
+                    database.delete_device(deleteType, device.global_id)
 
                     return '', 200
 

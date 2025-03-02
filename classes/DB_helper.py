@@ -252,6 +252,10 @@ class DBHelper:
             self.cur.execute(
                 f"UPDATE {device_type} SET name=? WHERE id=?", (name, globalId)
             )
+        else:
+            self.cur.execute(
+                f"UPDATE {device_type} SET name=?, type=? WHERE id=?", (name, custom_type, globalId)
+            )
 
         self.con.commit()
 

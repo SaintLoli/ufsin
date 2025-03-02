@@ -7,6 +7,15 @@ TABLES = {
     'other' : 'Другое'
 }
 
+REVERSE_TABLES = {
+    'Клавиатура': 'board',
+    'Монитор': 'monitor',
+    'Компьютерная мышь': 'mouse',
+    'Принтер': 'printer',
+    'Стационарный телефон': 'tel',
+    'Другое' : 'other'
+}
+
 JSON_FORM = {
     'cpu' : '',
     'motherboard' : '',

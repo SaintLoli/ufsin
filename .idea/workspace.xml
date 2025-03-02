@@ -8,8 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DB/UFSIN_DB.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/UFSIN_DB.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/DB_helper.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/DB_helper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Filler.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Filler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/classes/Models.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/Models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/classes/TABLENAMES.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/TABLENAMES.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/classes/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/classes/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layout/admin_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/layout/admin_home.html" afterDir="false" />
     </list>
@@ -467,7 +466,14 @@
       <option name="project" value="LOCAL" />
       <updated>1740741395772</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="add_device">
+      <created>1740826525335</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1740826525335</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
