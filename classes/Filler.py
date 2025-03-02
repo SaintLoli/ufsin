@@ -23,7 +23,7 @@ def fill_devices(USER_ID):
     fio = database.get_user_fio(USER_ID)
 
     PC = database.get_computer_info(int(USER_ID))
-    DEVICES.append(Device(database.get_pc_name_by_user_id(USER_ID), "Системный блок", "В эксплуатации", PC[4], PC[5],
+    DEVICES.append(Device(database.get_pc_name_by_user_id(USER_ID), "Системный блок", PC[6], PC[4], PC[5],
                           fio, cpu=PC[2], motherboard=PC[0], gpu=PC[1], ram=PC[3]))
 
     DEVICES[-1].id = id
@@ -34,9 +34,9 @@ def fill_devices(USER_ID):
         print(devices)
         for device in devices:
             if table_name != "other":
-                DEVICES.append(Device(device[0], TABLES[table_name], "В эксплуатации", user_fio=fio, global_id=device[1]))
+                DEVICES.append(Device(device[0], TABLES[table_name], device[2], user_fio=fio, global_id=device[1]))
             else:
-                DEVICES.append(Device(device[0], TABLES[table_name], "В эксплуатации", user_fio=fio, customType=device[1], global_id=device[2]))
+                DEVICES.append(Device(device[0], TABLES[table_name], device[3], user_fio=fio, customType=device[1], global_id=device[2]))
 
             DEVICES[-1].id = id
             id += 1

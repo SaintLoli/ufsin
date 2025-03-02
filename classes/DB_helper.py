@@ -25,14 +25,14 @@ class DBHelper:
         return self.cur.execute(f"SELECT id FROM user WHERE login='{login}'").fetchone()[0]
 
     def add_computer_info(self, user_id, cpu, motherboard, gpu, ram, year, s_number):
-        self.cur.execute(f"INSERT INTO comp (id_user, motherboard, gpu, cpu, ram, year, serial_number)"
-                         f" VALUES (?, ?, ?, ?, ?, ?, ?)",
+        self.cur.execute(f"INSERT INTO comp (id_user, motherboard, gpu, cpu, ram, year, serial_number, status)"
+                         f" VALUES (?, ?, ?, ?, ?, ?, ?, 1)",
                          (user_id, cpu, motherboard, gpu, ram, year, s_number))
         self.con.commit()
 
     def get_computer_info(self, user_id):
         return self.cur.execute(
-            f"SELECT motherboard, gpu, cpu, ram, year, serial_number FROM comp WHERE id_user=?", (user_id, )
+            f"SELECT motherboard, gpu, cpu, ram, year, serial_number, status FROM comp WHERE id_user=?", (user_id, )
         ).fetchone()
 
     def get_pc_name_by_user_id(self, user_id):
@@ -50,11 +50,17 @@ class DBHelper:
         else:
             return None
 
+    def change_device_status(self, device_type, global_id, status):
+        self.cur.execute(
+            f"UPDATE {device_type} SET status=? WHERE id=?", (status, global_id)
+        )
+        self.con.commit()
+
     def get_item(self, item, user_id):
         if item != "other":
-            return self.cur.execute(f"SELECT name, id FROM {item} WHERE id_user=?", (user_id, )).fetchall()
+            return self.cur.execute(f"SELECT name, id, status FROM {item} WHERE id_user=?", (user_id, )).fetchall()
         else:
-            return self.cur.execute(f"SELECT name, type, id FROM {item} WHERE id_user=?", (user_id, )).fetchall()
+            return self.cur.execute(f"SELECT name, type, id, status FROM {item} WHERE id_user=?", (user_id, )).fetchall()
 
     def get_item_type_by_id(self, id):
         return self.cur.execute(f"SELECT type FROM other WHERE id=?", (id,)).fetchone()
@@ -148,7 +154,7 @@ class DBHelper:
         return self.cur.execute(
             """
             SELECT type_item, id_item, arrival_time FROM item LEFT JOIN sklad ON id_stock == sklad.id
-            WHERE sklad.name == ? and item.status == 'ok'
+            WHERE sklad.name == ? and item.status == 1
             """, (whs_name, )
         ).fetchall()
 
@@ -156,7 +162,7 @@ class DBHelper:
         return self.cur.execute(
             """
             SELECT type_item, id_item, arrival_time FROM item LEFT JOIN sklad ON id_stock == sklad.id
-            WHERE sklad.name == ? and item.status == 'removed'
+            WHERE sklad.name == ? and item.status == 2
             """, (whs_name, )
         ).fetchall()
 
@@ -164,7 +170,7 @@ class DBHelper:
         return self.cur.execute(
             """
             SELECT type_item, id_item, arrival_time FROM item LEFT JOIN sklad ON id_stock == sklad.id
-            WHERE sklad.name == ? and item.status == 'underchange'
+            WHERE sklad.name == ? and item.status == 3
             """, (whs_name, )
         ).fetchall()
 
@@ -233,16 +239,14 @@ class DBHelper:
             f"SELECT id FROM offices WHERE name = ?", (name,)
         ).fetchone()[0]
 
-    def add_device(self, device_type, id_user, name, s_number='', year='', custom_type=""):
-
+    def add_device(self, device_type, id_user, name, s_number='', year='', custom_type="", status='1'):
         if custom_type == "":
-
             self.cur.execute(
-                f"INSERT INTO {device_type} (id_user, name) VALUES (?, ?)", (id_user, name)
+                f"INSERT INTO {device_type} (id_user, name, status) VALUES (?, ?, ?)", (id_user, name, status)
             )
         else:
             self.cur.execute(
-                f"INSERT INTO {device_type} (id_user, type, name) VALUES (?, ?, ?)", (id_user, custom_type, name)
+                f"INSERT INTO {device_type} (id_user, type, name, status) VALUES (?, ?, ?, ?)", (id_user, custom_type, name, status)
             )
         self.con.commit()
 

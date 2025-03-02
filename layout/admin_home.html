@@ -115,7 +115,9 @@
                         <th>Тип устройства</th>
                         <th>Инв. номер</th>
                         <th>Год выпуска</th>
-                        <th>Статус</th>
+                        {% if USER_ROLE != 3 %}
+                            <th>Статус</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -131,7 +133,7 @@
                                 data-device-type="{{device.type}}{% if device.customType != '' %} → {{device.customType}}{% endif %}"
                                 data-device-snumber="{{device.s_number}}"
                                 data-device-year="{{device.year}}"
-                                data-device-status="{{device.status}}"
+                                data-device-status="{{STATUS[device.status]}}"
                                 data-device-fio="{{device.user_fio}}"
                                 data-device-pc_name="{{device.name_pc}}"
                                 data-device-motherboard="{{device.motherboard}}"
@@ -145,7 +147,19 @@
                         <td>{{device.type}}</td>
                         <td>INV-2022-001</td>
                         <td>{{device.year}}</td>
-                        <td><span class="badge bg-success">{{device.status}}</span></td>
+                        {% if USER_ROLE != 3 %}
+                            <td>
+                                <a href="#statusModal"
+                                   class="text-decoration-none"
+                                   data-bs-toggle="modal"
+                                   data-device-id="{{device.id}}"
+                                   data-device-status="{{device.status}}">
+                                    <span class="badge bg-{% if device.status == 1 %}success{% elif device.status == 3 %}warning{% elif device.status == 2 %}danger{% else %}info{% endif %}">
+                                        {{STATUS[device.status]}}
+                                    </span>
+                                </a>
+                            </td>
+                        {% endif %}
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -202,6 +216,7 @@
                     <p><strong>Статус:</strong> <span id="modalDeviceStatus"></span></p>
                 </div>
                 <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" onclick="reportMalfunction()">Сообщить о неисправности</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
@@ -307,6 +322,35 @@
         </div>
     </div>
 
+    <!-- Модальное окно для изменения статуса -->
+    <div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalLabel">Изменить статус устройства</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="statusForm" method="post" action="{{ url_for('user_devices', name=name, devices=DEVICES, USER_ROLE=USER_ROLE, STATUS=STATUS_TABLE) }}">
+                        <input type="hidden" id="statusDeviceId">
+                        <div class="mb-3">
+                            <label for="deviceStatus" class="form-label">Статус</label>
+                            <select class="form-select" id="deviceStatus" name="deviceStatus" required>
+                                <option value="1">Ввести в эксплуатацию</option>
+                                <option value="2">Вывести из эксплуатации</option>
+                                <option value="3">Отправить на ремонт</option>
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
+                            <button type="button" class="btn btn-primary" onclick="saveStatus()">Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -336,6 +380,78 @@
                 });
             }
 
+            var statusModal = document.getElementById('statusModal');
+            statusModal.addEventListener('show.bs.modal', function (event) {
+                var button = event.relatedTarget;
+                var deviceId = button.getAttribute('data-device-id');
+                var currentStatus = button.getAttribute('data-device-status');
+
+                document.getElementById('statusDeviceId').value = deviceId;
+                document.getElementById('deviceStatus').value = currentStatus;
+            });
+
+            window.reportMalfunction = function() {
+                // Получаем deviceId из активного модального окна
+                const modal = document.getElementById('deviceModal');
+                const deviceId = modal.dataset.deviceId; // Будем хранить ID в data-атрибуте модального окна
+                const deviceName = document.getElementById('modalDeviceName').textContent;
+
+                if (!deviceId) {
+                    alert('Не удалось определить устройство');
+                    return;
+                }
+
+                // Подтверждение действия
+                if (confirm(`Сообщить о неисправности устройства "${deviceName}" (ID: ${deviceId})?`)) {
+                    fetch('/admin_home/staff/{{name}}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'deviceId=' + encodeURIComponent(deviceId) + "&report=" + encodeURIComponent('True')
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert('Сообщение о неисправности успешно отправлено');
+                            bootstrap.Modal.getInstance(modal).hide();
+                            location.reload()
+                        } else {
+                            alert('Ошибка при отправке сообщения');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Ошибка:', error);
+                        alert('Произошла ошибка при отправке');
+                    });
+                }
+            };
+
+            // Функция сохранения статуса
+            window.saveStatus = function() {
+                const deviceId = document.getElementById('statusDeviceId').value;
+                const newStatus = document.getElementById('deviceStatus').value;
+
+                // Здесь можно добавить AJAX-запрос к серверу
+                fetch('/admin_home/staff/{{name}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'deviceId=' + encodeURIComponent(deviceId) + '&deviceStatus=' + encodeURIComponent(newStatus)
+                }).then(response => {
+                    if (response.ok) {
+                        bootstrap.Modal.getInstance(statusModal).hide();
+                        location.reload();
+                    } else {
+                        alert('Ошибка при обновлении статуса');
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    alert('Произошла ошибка при сохранении');
+                });
+            };
+
             let selectedRow = null;
 
             window.selectRow = function(row) {
@@ -354,12 +470,15 @@
             var deviceModal = document.getElementById('deviceModal');
             deviceModal.addEventListener('show.bs.modal', function (event) {
                 var button = event.relatedTarget;
+                var deviceId = button.getAttribute('data-device-id')
                 var deviceName = button.getAttribute('data-device-name');
                 var deviceType = button.getAttribute('data-device-type');
                 var deviceSNumber = button.getAttribute('data-device-snumber');
                 var deviceYear = button.getAttribute('data-device-year');
                 var deviceStatus = button.getAttribute('data-device-status');
                 var deviceFio = button.getAttribute('data-device-fio');
+
+                deviceModal.dataset.deviceId = deviceId;
 
                 document.getElementById('modalDeviceName').textContent = deviceName;
                 document.getElementById('modalDeviceFio').textContent = deviceFio || "Не указано";
@@ -393,6 +512,8 @@
                 document.getElementById('modalSystemBlockYear').textContent = deviceYear;
                 document.getElementById('modalSystemBlockStatus').textContent = deviceStatus;
             });
+
+
 
             const typeMapping = {
                     'Клавиатура': 'board',
