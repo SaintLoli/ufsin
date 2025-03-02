@@ -127,12 +127,7 @@ def admin_panel():
         fill_organizations(USER_ROLE, database.get_organization_name(USER_ID))
         return render_template("organization.html", organization=ORGANIZATIONS)
     else:
-        return render_template("admin_home.html", devices=DEVICES)
-
-@app.route("/admin_home")
-def staff():
-    fill_users()
-    return render_template("staff.html", users=USERS)
+        return redirect(url_for("user_devices", devices=DEVICES, STATUS=STATUS_TABLE, USER_ROLE=USER_ROLE, name=database.get_user_fio(USER_ID)))
 
 
 @app.route("/admin_home/sklad")
@@ -319,46 +314,59 @@ def user_devices(name):
         deviceSNumber = request.form.get("deviceSNumber")
         deviceYear = request.form.get("deviceYear")
 
+        deviceStatus = request.form.get("deviceStatus")
+        report = request.form.get('report')
+
         deleteId = request.form.get("deleteId")
         deleteType = request.form.get("deleteType")
         if deleteType == "undefined":
             deleteType = "other"
 
-        if not deviceId and not deleteId:
-            database.add_device(deviceType, database.get_user_id_by_name(name), deviceName, custom_type=deviceCustomType)
+        if not deviceStatus and not report:
+            if not deviceId and not deleteId:
+                database.add_device(deviceType, database.get_user_id_by_name(name), deviceName, custom_type=deviceCustomType)
 
-        if deviceId:
+            if deviceId:
+                for device in DEVICES:
+                    print(device.id, " device ", deviceId)
+                    print(device.type, " deviceType ", deviceType)
+                    if str(device.id) == str(deviceId) and device.type == TABLES[deviceType]:
+                        database.edit_device(deviceType, deviceName, device.global_id, custom_type=deviceCustomType)
+                    elif str(device.id) == str(deviceId) and device.type != TABLES[deviceType]:
+                        database.add_device(deviceType, database.get_user_id_by_name(name), deviceName,
+                                            custom_type=deviceCustomType, status=device.status)
+                        database.delete_device(REVERSE_TABLES[device.type], device.global_id)
+
+
+            if deleteId:
+                for device in DEVICES:
+                    print(device.id, " device ", deleteId, device.global_id)
+                    print(device.type, " deviceType ", TABLES[deleteType])
+                    if str(device.id) == str(deleteId) and device.type == TABLES[deleteType]:
+                        database.delete_device(deleteType, device.global_id)
+
+                        return '', 200
+
+            return redirect(url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE, STATUS=STATUS_TABLE))
+
+        elif deviceStatus:
             for device in DEVICES:
-                print(device.id, " device ", deviceId)
-                print(device.type, " deviceType ", deviceType)
-                if str(device.id) == str(deviceId) and device.type == TABLES[deviceType]:
-                    database.edit_device(deviceType, deviceName, device.global_id, custom_type=deviceCustomType)
-                elif str(device.id) == str(deviceId) and device.type != TABLES[deviceType]:
-                    database.add_device(deviceType, database.get_user_id_by_name(name), deviceName,
-                                        custom_type=deviceCustomType)
-                    database.delete_device(REVERSE_TABLES[device.type], device.global_id)
+                if str(device.id) == str(deviceId):
+                    database.change_device_status(REVERSE_TABLES[device.type], device.global_id, deviceStatus)
+            return redirect(url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE, STATUS=STATUS_TABLE))
 
-        if deleteId:
+        elif report:
             for device in DEVICES:
-                print(device.id, " device ", deleteId, device.global_id)
-                print(device.type, " deviceType ", TABLES[deleteType])
-                if str(device.id) == str(deleteId) and device.type == TABLES[deleteType]:
-                    database.delete_device(deleteType, device.global_id)
+                if str(device.id) == str(deviceId):
+                    database.change_device_status(REVERSE_TABLES[device.type], device.global_id, 4)
 
-                    return '', 200
-
-
-
-
-        return redirect(url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE))
-
+            return redirect(
+                url_for("user_devices", name=name, devices=DEVICES, USER_ROLE=USER_ROLE, STATUS=STATUS_TABLE))
 
 
     if USER_ROLE <= 2 and (database.get_user_organization_by_id(this_user_id) == USER_ORGANIZATION or USER_ORGANIZATION == 'main'):
         fill_devices(this_user_id)
-
-    return render_template("admin_home.html",
-                    devices=DEVICES, USER_ROLE=USER_ROLE, name=name)
+    return render_template("admin_home.html", devices=DEVICES, USER_ROLE=USER_ROLE, name=name, STATUS=STATUS_TABLE)
 
 
 # @app.route("/admin_home/departments")
