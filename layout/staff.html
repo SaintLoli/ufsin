@@ -14,6 +14,8 @@
         .search-filter-container { margin-bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
         .search-filter-container input, .search-filter-container select { padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
         .action-buttons { margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end; }
+
+
     </style>
 </head>
 <body>
@@ -70,7 +72,6 @@
                         <td>{{user.job_title}}</td>
                         <td>{{user.office}}</td>
                         <td>{{user.tel}}</td>
-
                         <td><span class="badge bg-success">{{user.status}}</span></td>
                     </tr>
                     {% endfor %}
@@ -112,9 +113,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="department" class="form-label">Отдел</label>
-                            <input type="text" class="form-control" id="department" name="department" required>
+                            <select class="form-select" id="department" name="department" required>
+                                <option value="">Выберите отдел</option>
+                                {% for of in ofiices %}
+                                    <option value="{{ of[0] }}">{{ of[0] }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="telephone" class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="telephone" name="telephone" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -135,9 +144,7 @@
                 </div>
                 <div class="modal-body">
                     <form id="editEmployeeForm" method="post" action="{{ url_for('department_staff', office=department_name) }}">
-
                         <input type="hidden" id="editEmployeeId" name="employeeId">
-
                         <div class="mb-3">
                             <label for="editEmployeeName" class="form-label">ФИО</label>
                             <input type="text" class="form-control" id="editEmployeeName" name="employeeName" required>
@@ -156,9 +163,17 @@
                         </div>
                         <div class="mb-3">
                             <label for="editDepartment" class="form-label">Отдел</label>
-                            <input type="text" class="form-control" id="editDepartment" name="department" required>
+                            <select class="form-select" id="editDepartment" name="department" required>
+                                <option value="">Выберите отдел</option>
+                                {% for of in ofiices %}
+                                    <option value="{{ of[0] }}">{{ of[0] }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="editTelephone" class="form-label">Телефон</label>
+                            <input type="tel" class="form-control" id="editTelephone" name="telephone" placeholder="+79991234567" required>
+                        </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
                             <button type="submit" class="btn btn-primary">Сохранить изменения</button>
@@ -208,12 +223,12 @@
                 const name = selectedRow.cells[1].textContent.trim().split('\n')[0];
                 const jobTitle = selectedRow.cells[2].textContent;
                 const department = selectedRow.cells[3].textContent;
-
-
+                const telephone = selectedRow.cells[4].textContent;
 
                 document.getElementById('editEmployeeId').value = id;
                 document.getElementById('editEmployeeName').value = name;
                 document.getElementById('editDepartment').value = department;
+                document.getElementById('editTelephone').value = telephone;
 
                 // Здесь можно добавить AJAX для получения остальных данных из БД, если нужно
                 const modal = new bootstrap.Modal(document.getElementById('editEmployeeModal'));
@@ -221,7 +236,6 @@
             };
 
             window.deleteEmployee = function() {
-
                 if (!selectedRow) return;
                 const id = selectedRow.getAttribute('data-id');
                 const name = selectedRow.cells[1].textContent.trim().split('\n')[0];

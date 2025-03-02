@@ -217,15 +217,15 @@ class DBHelper:
             f"SELECT organization FROM offices WHERE name = ?", (name,)
         ).fetchone()[0]
 
-    def add_person(self, fio, role, organization, office):
-        self.cur.execute(f"INSERT INTO user (fio,  role, office, organization)"
-                         f" VALUES (?, ?,  ?, ?)",
-                         (fio,  role, office, organization))
+    def add_person(self, fio, role, organization, office, tel):
+        self.cur.execute(f"INSERT INTO user (fio,  role, office, organization, number)"
+                         f" VALUES (?, ?,  ?, ?, ?)",
+                         (fio,  role, office, organization, tel))
         self.con.commit()
 
-    def change_person(self, fio, role, organization, office,  id):
-        self.cur.execute("UPDATE user SET fio=?, role=?, office=?, organization=? WHERE id=?",
-                         (fio,  role, office, organization, id))
+    def change_person(self, fio, role, organization, office,  tel, id):
+        self.cur.execute("UPDATE user SET fio=?, role=?, office=?, organization=?, number = ? WHERE id=?",
+                         (fio,  role, office, organization,tel, id))
         self.con.commit()
 
     def get_office_by_name_of_ofiice(self, name):
@@ -312,3 +312,7 @@ class DBHelper:
         return self.cur.execute(
             f"SELECT id FROM organization WHERE name = ?", (name,)
         ).fetchone()[0]
+    def get_departments_of_organization(self, organization):
+        return self.cur.execute(
+            f"SELECT name FROM offices WHERE organization = ?", (organization,)
+        ).fetchall()

@@ -178,8 +178,11 @@ def otchet():
 
 @app.route("/admin_home/<name>/departments", methods=['GET', 'POST'])
 def departments(name):
+    global org
+    org = name
     if int(USER_ROLE) <= 2:
-        if USER_ORGANIZATION == name or USER_ORGANIZATION == 'main':  # Проверка организации
+        if USER_ORGANIZATION == name or USER_ORGANIZATION == 'main':
+
             if request.method == 'POST':
                 if 'deleteId' in request.form:
 
@@ -204,6 +207,8 @@ def departments(name):
                     return redirect(url_for('departments', name=name))
 
             fill_departments(name)
+
+
             return render_template("departments.html", departments=DEPARTMENTS, name=name)
     return "Доступ запрещен", 403
 
@@ -219,6 +224,8 @@ def department_staff(office):
 
     organization = database.get_organization_name(USER_ID)
     fill_department_staff(organization, office)
+    ofiices = database.get_departments_of_organization(org)
+    print(org)
 
     if request.method == "POST":
 
@@ -227,6 +234,7 @@ def department_staff(office):
             access_level = request.form.get('accessLevel')
             organization = request.form.get('organization')
             department = request.form.get('department')
+            telephone = request.form.get('telephone')
 
 
             if name and access_level and organization and department :
@@ -234,7 +242,8 @@ def department_staff(office):
                     name,
                     access_level,
                     organization,
-                    department
+                    department,
+                    telephone
 
                 )
                 fill_department_staff(organization, office)
@@ -259,8 +268,9 @@ def department_staff(office):
             name = person_name
             employeeName = request.form.get('employeeName')
             access_level = request.form.get('accessLevel')
-            organization =      request.form.get('organization')
-            department =        request.form.get('department')
+            organization = request.form.get('organization')
+            department = request.form.get('department')
+            telephone = request.form.get('telephone')
 
 
             print(employeeName, employee_id, access_level, organization, department)
@@ -269,7 +279,8 @@ def department_staff(office):
 
             if employee_id and name and access_level and organization and department :
 
-                database.change_person(employeeName, access_level, organization, department, employee_id)
+                database.change_person(employeeName, access_level, organization, department, telephone, employee_id)
+
 
                 fill_department_staff(organization, office)
                 return redirect(url_for('department_staff', office=office))
@@ -291,7 +302,8 @@ def department_staff(office):
                 fill_department_staff(organization, office)
                 return '', 200
 
-    return render_template("staff.html", users=STAFF, department_name=office)
+
+    return render_template("staff.html", users=STAFF, department_name=office,  ofiices=ofiices)
 
 @app.route("/admin_home/staff/<name>", methods=['GET', 'POST'])
 def user_devices(name):
